@@ -7,12 +7,20 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {
-      colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
-      },
+    colors: {
+      white: '#FFFFFF',
+      black: '#000011',
+      blue: '#003096'
     },
+    extend: {
+      fontFamily: {
+        sans: ["DM Sans", "sans-serif"],
+        serif: ["Times Now", "serif"]
+      },
+      borderWidth: {
+        1: "1px",
+      },
+    }
   },
   plugins: [],
 };

@@ -1,7 +1,10 @@
+"use client"
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMedium, faTelegramPlane, faXTwitter } from "@fortawesome/free-brands-svg-icons";
 import content from "@/content";
 import Link from "next/link";
+import {usePathname} from "next/navigation";
 
 const Footer = () => {
   const menus = [...content.header.left, ... content.header.right].map((item, index) => (
@@ -9,7 +12,12 @@ const Footer = () => {
       {item.title}
     </Link>
 
-))
+  ))
+
+  const pathname = usePathname();
+
+  if (pathname === '/') return <></>
+
   return (
     <footer className='p-8 bg-blue text-white flex flex-col items-center'>
       <div className='flex items-center gap-8 pb-6'>

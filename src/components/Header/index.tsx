@@ -34,7 +34,6 @@ const Header = () => {
           ))}
         </div>
       </div>
-      {/*<div className='h-8 w-full bg-gradient-to-b from-white' />*/}
     </header>
   )
 }

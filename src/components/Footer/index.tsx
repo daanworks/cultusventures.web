@@ -1,13 +1,29 @@
-import Image from "next/image";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMedium, faTelegramPlane, faXTwitter } from "@fortawesome/free-brands-svg-icons";
+import content from "@/content";
+import Link from "next/link";
 
 const Footer = () => {
+  const menus = [...content.header.left, ... content.header.right].map((item, index) => (
+    <Link href={item.link} key={index} className='px-4'>
+      {item.title}
+    </Link>
+
+))
   return (
-    <footer className='p-24 bg-blue text-white flex justify-between'>
-      <div className='font-sans'>
-        <div className='text-4xl pb-8'>Cultus Ventures</div>
-        <div>Coming soon...</div>
+    <footer className='p-8 bg-blue text-white flex flex-col items-center'>
+      <div className='flex items-center gap-8 pb-6'>
+        <hr className='bg-white w-60' />
+        <FontAwesomeIcon icon={faXTwitter} size='xl' />
+        <FontAwesomeIcon icon={faTelegramPlane} size='xl' />
+        <FontAwesomeIcon icon={faMedium} size='xl' />
+        <hr className='bg-white w-60' />
       </div>
-      <Image src={'/logo_white.png'} alt={'logo white'} width={180} height={180} />
+      <div className='text-2xl font-sans'>Cultus Ventures</div>
+      <div className='font-sans text-xs pb-8'>Copyright © 2024</div>
+      <div className='font-sans flex items-center divide-x divide-solid text-sm'>
+        {menus}
+      </div>
     </footer>
   )
 }

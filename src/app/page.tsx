@@ -1,7 +1,11 @@
 import arrow from '../../public/arrow.svg'
-import stairs from '../../public/stairs.jpg'
+import mountain from '../../public/mountain.jpg'
 import Image from "next/image";
 import Link from "next/link";
+import '@fortawesome/fontawesome-svg-core/styles.css';
+// Prevent fontawesome from adding its CSS since we did it manually above:
+import { config } from '@fortawesome/fontawesome-svg-core';
+config.autoAddCss = false; /* eslint-disable import/first */
 
 export default function Home() {
   return (
@@ -24,8 +28,8 @@ export default function Home() {
         <div
           className='flex-1 w-full'
           style={{
-            backgroundImage: `url(${stairs.src})`,
-            backgroundPosition: 'bottom',
+            backgroundImage: `url(${mountain.src})`,
+            backgroundPosition: 'top',
             backgroundSize: 'cover',
           }}
         />

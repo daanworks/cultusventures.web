@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import content from "@/content";
 import bars from '../../../public/bars.svg'
 import close from '../../../public/close.svg'
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 
 const Header = () => {
 
@@ -15,7 +15,17 @@ const Header = () => {
 
   useEffect(() => {
     setModalOpen(false);
-  }, [pathname])
+  }, [pathname]);
+
+  const handleModalOpen = () => {
+    if (modalOpen) {
+      setModalOpen(false);
+      // document.body.classList.remove('overflow-y-hidden');
+    } else {
+      setModalOpen(true);
+      // document.body.classList.add('overflow-y-hidden');
+    }
+  }
 
   return (
     <header className='sticky top-0 flex w-full lg:justify-center justify-between items-center py-6 bg-white px-8'>
@@ -41,10 +51,10 @@ const Header = () => {
         ))}
       </div>
       <div className='lg:hidden z-10'>
-        <Image src={modalOpen ? close : bars} alt='bars' onClick={() => setModalOpen(!modalOpen)} />
+        <Image src={modalOpen ? close : bars} alt='bars' onClick={() => handleModalOpen()} />
       </div>
       {modalOpen &&
-        <div className='absolute top-0 left-0 h-screen w-full bg-white px-8 flex flex-col gap-4 pt-24 justify-center items-end'>
+        <div className='absolute top-0 left-0 w-full bg-white px-8 flex flex-col gap-4 pt-24 pb-4 justify-center items-end'>
           {[...content.header.left, ...content.header.right].map(item => <Link href={item.link} key={item.link}>{item.title.toUpperCase()}</Link>)}
         </div>
       }

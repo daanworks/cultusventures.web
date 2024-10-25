@@ -6,7 +6,8 @@ import { usePathname } from "next/navigation";
 import content from "@/content";
 import bars from '../../../public/bars.svg'
 import close from '../../../public/close.svg'
-import { useEffect, useState } from "react";
+import {useEffect, useRef, useState} from "react";
+import useOnClickOutside from "@/hooks/useOnClickOutside";
 
 const Header = () => {
 
@@ -17,18 +18,11 @@ const Header = () => {
     setModalOpen(false);
   }, [pathname]);
 
-  const handleModalOpen = () => {
-    if (modalOpen) {
-      setModalOpen(false);
-      // document.body.classList.remove('overflow-y-hidden');
-    } else {
-      setModalOpen(true);
-      // document.body.classList.add('overflow-y-hidden');
-    }
-  }
+  const ref = useRef(null);
+  useOnClickOutside(ref, () => setModalOpen(false));
 
   return (
-    <header className='sticky top-0 flex w-full lg:justify-center justify-between items-center py-6 bg-white px-8'>
+    <header ref={ref} className='sticky top-0 flex w-full lg:justify-center justify-between items-center py-6 bg-white px-8'>
       <div className='lg:flex hidden h-full w-full flex-1 justify-end gap-24 lg:pr-24 pr-8'>
         {content.header.left.map(item => (
           <Link key={item.link} href={item.link}>
@@ -51,7 +45,7 @@ const Header = () => {
         ))}
       </div>
       <div className='lg:hidden z-10'>
-        <Image src={modalOpen ? close : bars} alt='bars' onClick={() => handleModalOpen()} />
+        <Image src={modalOpen ? close : bars} alt='bars' onClick={() => setModalOpen(!modalOpen)} />
       </div>
       {modalOpen &&
         <div className='absolute top-0 left-0 w-full bg-white px-8 flex flex-col gap-4 pt-24 pb-4 justify-center items-end'>

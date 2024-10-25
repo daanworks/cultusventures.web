@@ -8,8 +8,8 @@ config.autoAddCss = false;
 
 export default function Home() {
   return (
-    <div className='flex flex-col items-center pt-8'>
-      <div className='leading-normal text-center text-5xl pb-8 text-balance'>
+    <div className='flex flex-col items-center pt-8 w-full'>
+      <div className='lg:leading-normal md:leading-relaxed leading-snug text-center lg:text-5xl md:text-4xl text-3xl pb-8 text-balance px-16 w-full'>
         Empowering people to invest seamlessly, build wealth, and confidently beat inflation for a more secure future
       </div>
       <Link

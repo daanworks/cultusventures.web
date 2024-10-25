@@ -21,11 +21,11 @@ const Footer = () => {
   return (
     <footer className='p-8 bg-blue text-white flex flex-col items-center'>
       <div className='flex items-center gap-8 pb-6'>
-        <hr className='bg-white w-60' />
+        <hr className='bg-white lg:w-60 md:w-40 w-20' />
         <FontAwesomeIcon icon={faXTwitter} size='xl' />
         <FontAwesomeIcon icon={faTelegramPlane} size='xl' />
         <FontAwesomeIcon icon={faMedium} size='xl' />
-        <hr className='bg-white w-60' />
+        <hr className='bg-white lg:w-60 md:w-40 w-20' />
       </div>
       <div className='text-2xl font-sans'>Cultus Ventures</div>
       <div className='font-sans text-xs pb-8'>Copyright © 2024</div>

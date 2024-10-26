@@ -22,9 +22,7 @@ const Footer = () => {
     <footer className='p-8 bg-blue text-white flex flex-col items-center'>
       <div className='flex items-center gap-8 pb-6'>
         <hr className='bg-white lg:w-60 md:w-40 w-20' />
-        <FontAwesomeIcon icon={faXTwitter} className='sm:text-2xl text-xl' />
-        <FontAwesomeIcon icon={faTelegramPlane} className='sm:text-2xl text-xl' />
-        <FontAwesomeIcon icon={faMedium} className='sm:text-2xl text-xl' />
+        {content.socials.map(item => <FontAwesomeIcon key={item.link} icon={item.icon} className='sm:text-2xl text-xl' />)}
         <hr className='bg-white lg:w-60 md:w-40 w-20' />
       </div>
       <div className='text-2xl font-sans'>Cultus Ventures</div>

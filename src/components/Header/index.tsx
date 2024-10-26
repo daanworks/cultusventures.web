@@ -50,6 +50,7 @@ const Header = () => {
       {modalOpen &&
         <div className='absolute top-0 left-0 w-full bg-white px-8 flex flex-col gap-4 pt-24 pb-4 justify-center items-end'>
           {[...content.header.left, ...content.header.right].map(item => <Link href={item.link} key={item.link}>{item.title.toUpperCase()}</Link>)}
+          {content.socials.map(item => <Link href={item.link} key={item.link}>{item.name}</Link>)}
         </div>
       }
     </header>

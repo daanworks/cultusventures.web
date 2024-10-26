@@ -1,7 +1,6 @@
 "use client"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMedium, faTelegramPlane, faXTwitter } from "@fortawesome/free-brands-svg-icons";
 import content from "@/content";
 import Link from "next/link";
 import {usePathname} from "next/navigation";

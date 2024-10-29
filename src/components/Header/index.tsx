@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import content from "@/content";
 import bars from '../../../public/bars.svg'
 import close from '../../../public/close.svg'
-import {useEffect, useRef, useState} from "react";
+import { useEffect, useRef, useState } from "react";
 import useOnClickOutside from "@/hooks/useOnClickOutside";
 
 const Header = () => {

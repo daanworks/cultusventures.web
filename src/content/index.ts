@@ -2,6 +2,8 @@ import { faLinkedin, faMedium, faTelegram, faXTwitter } from "@fortawesome/free-
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import { config } from '@fortawesome/fontawesome-svg-core';
 config.autoAddCss = false;
+import bitcoindollar from '../../public/bitcoindollar.jpg'
+import dollarinhand from '../../public/dollarinhand.jpg'
 
 const content = {
   lorem: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
@@ -13,14 +15,14 @@ const content = {
         link: '/about'
       },
       {
-        title: 'portfolio',
-        link: '/portfolio'
+        title: 'positions',
+        link: '/positions'
       }
     ],
     right: [
       {
-        title: 'faq',
-        link: '/faq'
+        title: 'market reports',
+        link: '/market-reports'
       },
       {
         title: 'contact',
@@ -49,7 +51,19 @@ const content = {
       name: 'X',
       link: 'https://www.lorem.com/'
     },
-  ]
+  ],
+  about: {
+    publicPortfolio: {
+      title: 'Public<br />Portfolio',
+      text: 'Our Public Portfolio is a transparent showcase of diverse investment strategies, designed to help you navigate both traditional and emerging financial landscapes. We blend TradFi (traditional finance) approaches with crypto opportunities, offering an insightful look at how diversified strategies can work together to outpace inflation and grow wealth. By openly sharing our strategies and results, we aim to empower you with the confidence and knowledge needed to make informed investment decisions.',
+      image: bitcoindollar.src
+    },
+    marketReports: {
+      title: 'Market<br />Reports',
+      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+      image: dollarinhand.src
+    }
+  }
 }
 
 export default content

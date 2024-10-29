@@ -7,6 +7,27 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: "Times Now";
+  src: url("/TimesNow-SemiBold.woff");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Times Now";
+  src: url("/TimesNow-SemiLightItalic.woff");
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Times Now";
+  src: url("/TimesNow-SemiBoldItalic.woff");
+  font-weight: bold;
+  font-style: italic;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -17,7 +38,7 @@
     @apply bg-white;
     @apply font-serif;
     @apply subpixel-antialiased;
-    @apply overflow-y-hidden;
+    @apply overscroll-none;
   }
   body {
     font-size: 18px;

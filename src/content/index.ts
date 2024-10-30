@@ -63,6 +63,10 @@ const content = {
       text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
       image: dollarinhand.src
     }
+  },
+  positions: {
+    title: 'Positions',
+    description: 'Our Public Positions section provides an open view of Cultus Ventures’ current investment allocations across various asset classes. By showcasing our holdings, we aim to offer a clear, real-time example of how diversified investments can be structured to address market changes, inflation, and growth opportunities.<br /><br />Each position is shared with the purpose of education—giving you a reference point to understand asset choices, timing, and market responses. This transparency is designed to help you see the principles in action, empowering you to make informed decisions as you shape your own investment journey.'
   }
 }
 

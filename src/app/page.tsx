@@ -4,8 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArcElement, Tooltip, Legend, Title, Chart as ChartJS } from 'chart.js';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faXTwitter, faBitcoin } from "@fortawesome/free-brands-svg-icons";
-import { faBitcoinSign } from "@fortawesome/free-solid-svg-icons/faBitcoinSign";
+import { faXTwitter } from "@fortawesome/free-brands-svg-icons";
 import { config } from '@fortawesome/fontawesome-svg-core'
 config.autoAddCss = false
 

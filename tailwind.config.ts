@@ -11,7 +11,8 @@ const config: Config = {
       white: '#FFFFFF',
       black: '#000011',
       blue: '#003096',
-      green: '#99D6B5'
+      green: '#99D6B5',
+      grey: '#BFBFBF'
     },
     extend: {
       fontFamily: {

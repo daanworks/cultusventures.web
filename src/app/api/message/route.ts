@@ -13,9 +13,9 @@ export const GET = async () => {
       },
       {
         status: 200,
-      }
+      } as never
     )
   } catch (error: Error) {
-    return NextResponse.json({ error: (error as Error).message }, { status: 500 });
+    return NextResponse.json({ error: (error as Error).message }, { status: 500 } as never);
   }
 }

@@ -20,7 +20,7 @@ export const POST = async (req: NextRequest) => {
   }
 
   if (event.type === "payment_intent.succeeded") {
-    const session = event.data.object as Stripe.Checkout.Session;
+    const session = event.data.object as unknown as Stripe.Checkout.Session;
     const email = session.customer_email ? session.customer_email : 'daniel.babinszky@gmail.com';
 
     if (!email) {

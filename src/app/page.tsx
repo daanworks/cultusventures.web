@@ -2,15 +2,12 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArcElement, Tooltip, Legend, Title, Chart as ChartJS } from 'chart.js';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { config } from '@fortawesome/fontawesome-svg-core'
 import { faCode } from "@fortawesome/free-solid-svg-icons";
 import { faXTwitter } from "@fortawesome/free-brands-svg-icons";
 
 config.autoAddCss = false
-
-ChartJS.register(ArcElement, Tooltip, Legend, Title);
 
 export default function Home() {
 

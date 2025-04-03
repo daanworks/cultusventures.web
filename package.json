@@ -14,19 +14,24 @@
     "@fortawesome/free-regular-svg-icons": "^6.6.0",
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
-    "chart.js": "^4.4.6",
+    "@prisma/client": "^6.5.0",
+    "form-data": "^4.0.2",
+    "maileroo": "^0.0.2",
     "next": "14.2.15",
+    "node-cache": "^5.1.2",
     "react": "^18",
-    "react-chartjs-2": "^5.2.0",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "stripe": "^18.0.0"
   },
   "devDependencies": {
+    "@types/mailgun-js": "^0.22.18",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",
     "eslint-config-next": "14.2.15",
     "postcss": "^8",
+    "prisma": "^6.5.0",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   }

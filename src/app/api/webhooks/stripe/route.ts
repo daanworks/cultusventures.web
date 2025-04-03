@@ -37,7 +37,7 @@ export const POST = async (req: NextRequest) => {
         }
       })
     } catch (error) {
-      console.log("Database error: " + e.message)
+      console.log("Database error: " + (error as Error).message)
       return NextResponse.json({ error: "Database error: " + (error as Error).message }, { status: 500 } as any)
     }
 

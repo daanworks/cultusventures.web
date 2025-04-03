@@ -15,8 +15,8 @@ export const POST = async (req: NextRequest) => {
 
   try {
     event = stripe.webhooks.constructEvent(payload, signature, process.env.STRIPE_WEBHOOK_SECRET!);
-  } catch (err) {
-    return NextResponse.json({ error: "Webhook verification failed: " + err.message }, { status: 400 } as any);
+  } catch (error) {
+    return NextResponse.json({ error: "Webhook verification failed: " + (error as Error).message }, { status: 400 } as any);
   }
 
   if (event.type === "payment_intent.succeeded") {
@@ -36,9 +36,9 @@ export const POST = async (req: NextRequest) => {
           apiKey
         }
       })
-    } catch (e) {
+    } catch (error) {
       console.log("Database error: " + e.message)
-      return NextResponse.json({ error: "Database error: " + e.message }, { status: 500 } as any)
+      return NextResponse.json({ error: "Database error: " + (error as Error).message }, { status: 500 } as any)
     }
 
     const mailerooClient = MailerooClient.getClient(process.env.MAILEROO_API_KEY);

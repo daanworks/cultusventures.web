@@ -14,6 +14,7 @@
     "@fortawesome/free-regular-svg-icons": "^6.6.0",
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
+    "@google/genai": "^0.7.0",
     "@prisma/client": "^6.5.0",
     "form-data": "^4.0.2",
     "maileroo": "^0.0.2",

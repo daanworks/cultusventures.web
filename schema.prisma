@@ -9,9 +9,10 @@ datasource db {
 }
 
 model Analysis {
-  id            String     @default(cuid()) @id
-  content       String
-  createdAt     DateTime   @default(now()) @map(name: "created_at")
+  id                String     @default(cuid()) @id
+  shortDescription  String
+  longDescription   String
+  createdAt         DateTime   @default(now()) @map(name: "created_at")
 }
 
 model ApiKey {

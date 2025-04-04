@@ -15,10 +15,12 @@ export const GET = async (req: NextRequest) => {
       model: "gemini-2.0-flash",
       contents: "Explain how AI works in a few words",
     })
-    const content = response.text as string
+    const longDescription = response.text as string
+    const shortDescription = 'HOLD'
     await prisma.analysis.create({
       data: {
-        content
+        longDescription,
+        shortDescription
       }
     })
     return NextResponse.json({ success: true }, { status: 200 } as any)

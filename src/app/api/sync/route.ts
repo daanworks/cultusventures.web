@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "../../../../lib/prisma";
 import { GoogleGenAI } from "@google/genai";
+import { HOLD } from "@/constants";
 
 export const GET = async (req: NextRequest) => {
   const auth = req.headers.get('authorization')
@@ -16,7 +17,7 @@ export const GET = async (req: NextRequest) => {
       contents: "Explain how AI works in a few words",
     })
     const longDescription = response.text as string
-    const shortDescription = 'HOLD'
+    const shortDescription = HOLD
     await prisma.analysis.create({
       data: {
         longDescription,

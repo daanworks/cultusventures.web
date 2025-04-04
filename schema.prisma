@@ -10,7 +10,7 @@ datasource db {
 
 model Analysis {
   id                String     @default(cuid()) @id
-  shortDescription  String
+  shortDescription  ShortDescription
   longDescription   String
   createdAt         DateTime   @default(now()) @map(name: "created_at")
 }
@@ -21,4 +21,11 @@ model ApiKey {
   apiKey        String       @unique
   createdAt     DateTime     @default(now()) @map(name: "created_at")
   @@map(name: "apiKey")
+}
+
+enum ShortDescription {
+  BUY
+  SELL
+  HOLD
+  DO_NOTHING @map("DO NOTHING")
 }

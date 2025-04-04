@@ -3,7 +3,8 @@ import { NextResponse } from "next/server";
 export const GET = async () => {
   try {
     const createdAt = new Date(Date.now()).toISOString().split("T")[0]
-    const jokeResponse = await fetch('https://api.sampleapis.com/jokes/goodJokes');
+    // ENABLED CACHING
+    const jokeResponse = await fetch('https://api.sampleapis.com/jokes/goodJokes', { next: { revalidate: 3600 } });
     const joke = await jokeResponse.json();
     return NextResponse.json(
       {

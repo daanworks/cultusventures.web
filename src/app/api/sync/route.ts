@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "../../../../lib/prisma";
 import { GoogleGenAI } from "@google/genai";
-import { HOLD } from "@/constants";
+import { BUY, DO_NOTHING, HOLD, SELL } from "@/constants";
+import { Prisma } from '@prisma/client'
 
 export const GET = async (req: NextRequest) => {
   const auth = req.headers.get('authorization')
@@ -12,9 +13,26 @@ export const GET = async (req: NextRequest) => {
   const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
   try {
+    const latestItem: Prisma.PromiseReturnType<any> = await prisma.analysis.findFirst({
+      orderBy: { createdAt: "desc" },
+    } as Prisma.AnalysisFindFirstArgs)
+    if (latestItem.shortDescription === HOLD || latestItem.shortDescription === DO_NOTHING) {
+      await prisma.analysis.delete({
+        where: {
+          id: latestItem.id
+        }
+      })
+    }
+    const today = new Date().toISOString().split('T')[0]
+    const prompts = {
+      [HOLD]: 'Explain me why should I hold my Bitcoins in a few words according to todays fundamental and technical analysis. Today is ' + today,
+      [BUY]: 'buy',
+      [SELL]: 'sell',
+      [DO_NOTHING]: 'do nothing with'
+    }
     const response = await ai.models.generateContent({
       model: "gemini-2.0-flash",
-      contents: "Explain how AI works in a few words",
+      contents: prompts[HOLD],
     })
     const longDescription = response.text as string
     const shortDescription = HOLD

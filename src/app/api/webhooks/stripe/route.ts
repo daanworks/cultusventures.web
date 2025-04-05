@@ -19,9 +19,12 @@ export const POST = async (req: NextRequest) => {
     return NextResponse.json({ error: "Webhook verification failed: " + (error as Error).message }, { status: 400 } as any);
   }
 
+  console.log('-------- STRIPE EVENT OBJECT OUTSIDE IF ----------')
+  console.log(event)
+
   if (event.type === "payment_intent.succeeded") {
     // const session = event.data.object as unknown as Stripe.Checkout.Session;
-    console.log('-------- STRIPE EVENT OBJECT ----------')
+    console.log('-------- STRIPE EVENT OBJECT INSIDE IF ----------')
     console.log(event)
     // const email = session.customer.email ? session.customer.email : 'daniel.babinszky@gmail.com';
 

@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
-import prisma from "../../../../../lib/prisma";
-import { MailerooClient } from "maileroo";
-import { randomBytes } from 'crypto';
+// import prisma from "../../../../../lib/prisma";
+// import { MailerooClient } from "maileroo";
+// import { randomBytes } from 'crypto';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2025-03-31.basil",
@@ -20,34 +20,36 @@ export const POST = async (req: NextRequest) => {
   }
 
   if (event.type === "payment_intent.succeeded") {
-    const session = event.data.object as unknown as Stripe.Checkout.Session;
-    const email = session.customer_email ? session.customer_email : 'daniel.babinszky@gmail.com';
+    // const session = event.data.object as unknown as Stripe.Checkout.Session;
+    console.log('-------- STRIPE EVENT OBJECT ----------')
+    console.log(event)
+    // const email = session.customer.email ? session.customer.email : 'daniel.babinszky@gmail.com';
 
-    if (!email) {
-      return NextResponse.json({ error: "No email found" }, { status: 400 } as any);
-    }
+    // if (!email) {
+    //   return NextResponse.json({ error: "No email found" }, { status: 400 } as any);
+    // }
 
-    const apiKey = randomBytes(32).toString('hex');
+    // const apiKey = randomBytes(32).toString('hex');
 
-    try {
-      await prisma.apiKey.create({
-        data: {
-          email,
-          apiKey
-        }
-      })
-    } catch (error) {
-      console.log("Database error: " + (error as Error).message)
-      return NextResponse.json({ error: "Database error: " + (error as Error).message }, { status: 500 } as any)
-    }
-
-    const mailerooClient = MailerooClient.getClient(process.env.MAILEROO_API_KEY);
-    await mailerooClient
-      .setFrom('Cultus Ventures', 'cultusventures@05248f7e147e4168.maileroo.org')
-      .setTo('Daniel Babinszky', 'daniel.babinszky@gmail.com')
-      .setSubject('Hello World!')
-      .setPlain(apiKey + ' ' + email)
-      .sendBasicEmail();
+    // try {
+    //   await prisma.apiKey.create({
+    //     data: {
+    //       email,
+    //       apiKey
+    //     }
+    //   })
+    // } catch (error) {
+    //   console.log("Database error: " + (error as Error).message)
+    //   return NextResponse.json({ error: "Database error: " + (error as Error).message }, { status: 500 } as any)
+    // }
+    //
+    // const mailerooClient = MailerooClient.getClient(process.env.MAILEROO_API_KEY);
+    // await mailerooClient
+    //   .setFrom('Cultus Ventures', 'cultusventures@05248f7e147e4168.maileroo.org')
+    //   .setTo('Daniel Babinszky', 'daniel.babinszky@gmail.com')
+    //   .setSubject('Hello World!')
+    //   .setPlain(apiKey + ' ' + email)
+    //   .sendBasicEmail();
 
     return NextResponse.json({ success: true });
   }

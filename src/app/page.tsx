@@ -47,7 +47,7 @@ export default function Home() {
           Our data-driven API empowers individuals and businesses with advanced market analytics, enabling them to navigate the volatile crypto landscape with precision and confidence.
         </div>
       </div>
-      <div className='font-sans text-xs pb-6'>
+      <div className='font-sans text-xs pb-6 pt-32'>
         <div className='pb-6 text-grey'>This API does not provide financial or investment advice. All signals are generated automatically and should not be relied upon for making trading decisions. Users should conduct their own research before investing. By using this API, you acknowledge that trading cryptocurrencies carries risk and that past performance is not indicative of future results.</div>
         <div>© {new Date().getFullYear()}, Cultus Ventures</div>
       </div>

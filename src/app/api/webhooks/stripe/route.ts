@@ -21,7 +21,7 @@ export const POST = async (req: NextRequest) => {
 
   if (event.type === "checkout.session.completed") {
     const session = event.data.object as unknown as Stripe.Checkout.Session;
-    const email = session.customer_email
+    const email = session.customer_details?.email
 
     if (!email) {
       return NextResponse.json({ error: "No email found" }, { status: 400 } as any);

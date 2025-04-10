@@ -17,8 +17,8 @@ model Analysis {
 
 model ApiKey {
   id            String       @default(cuid()) @id
-  email         String       @unique
-  apiKey        String       @unique
+  email         String
+  apiKey        String       
   createdAt     DateTime     @default(now()) @map(name: "created_at")
   @@map(name: "apiKey")
 }

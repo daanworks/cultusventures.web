@@ -4,6 +4,9 @@ import NodeCache from "node-cache";
 const cache = new NodeCache({ stdTTL: 60 });
 
 export const middleware = async (req: NextRequest) => {
+  if (!process.env.ADMIN_USER || !process.env.ADMIN_PASSWORD) {
+    return NextResponse.json({ error: "Nice try..." }, { status: 401 } as any);
+  }
   const apiKey = req.headers.get("CV-API-KEY");
   const adminCredentials = btoa(`${process.env.ADMIN_USER}:${process.env.ADMIN_PASSWORD}`);
   if (!apiKey) {

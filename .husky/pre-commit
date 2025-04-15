@@ -1,1 +1,2 @@
-echo 'hello!'
+echo 'Running husky...'
+npx lint-staged --concurrent false

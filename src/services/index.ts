@@ -1,5 +1,4 @@
-import { PrismaClient, Analysis, ApiKey } from '@prisma/client'
-import { ANALYSIS_OPERATION } from '@/types'
+import { PrismaClient, Analysis, ApiKey, ShortDescription } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
@@ -17,7 +16,7 @@ export const AnalysisService = {
       },
     })
   },
-  create: async (longDescription: string, shortDescription: ANALYSIS_OPERATION): Promise<void> => {
+  create: async (longDescription: string, shortDescription: ShortDescription): Promise<void> => {
     await prisma.analysis.create({
       data: {
         longDescription,

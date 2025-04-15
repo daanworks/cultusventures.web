@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import prisma from "../../../../lib/prisma";
 import { GoogleGenAI } from "@google/genai";
-import { BUY, DO_NOTHING, HOLD, SELL } from "@/constants";
-import { Prisma } from '@prisma/client'
+import { ANALYSIS_OPERATIONS } from "@/constants";
+import { AnalysisService } from "@/services";
+import { ANALYSIS_OPERATION } from "@/types";
 
 export const GET = async (req: NextRequest) => {
   const auth = req.headers.get('authorization')
@@ -13,35 +13,24 @@ export const GET = async (req: NextRequest) => {
   const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
   try {
-    const latestItem: Prisma.PromiseReturnType<any> = await prisma.analysis.findFirst({
-      orderBy: { createdAt: "desc" },
-    } as Prisma.AnalysisFindFirstArgs)
-    if (latestItem.shortDescription === HOLD || latestItem.shortDescription === DO_NOTHING) {
-      await prisma.analysis.delete({
-        where: {
-          id: latestItem.id
-        }
-      })
+    const latestItem = await AnalysisService.getLatest()
+    if (latestItem.shortDescription === ANALYSIS_OPERATIONS.HOLD || latestItem.shortDescription === ANALYSIS_OPERATIONS.DO_NOTHING) {
+      await AnalysisService.deleteById(latestItem.id);
     }
     const today = new Date().toISOString().split('T')[0]
     const prompts = {
-      [HOLD]: 'Explain me why should I hold my Bitcoins in a few words according to todays fundamental and technical analysis. Today is ' + today,
-      [BUY]: 'buy',
-      [SELL]: 'sell',
-      [DO_NOTHING]: 'do nothing with'
+      [ANALYSIS_OPERATIONS.HOLD]: 'Explain me why should I hold my Bitcoins in a few words according to todays fundamental and technical analysis. Today is ' + today,
+      [ANALYSIS_OPERATIONS.BUY]: 'buy',
+      [ANALYSIS_OPERATIONS.SELL]: 'sell',
+      [ANALYSIS_OPERATIONS.DO_NOTHING]: 'do nothing with'
     }
     const response = await ai.models.generateContent({
       model: "gemini-2.0-flash",
-      contents: prompts[HOLD],
+      contents: prompts[ANALYSIS_OPERATIONS.HOLD],
     })
-    const longDescription = response.text as string
-    const shortDescription = HOLD
-    await prisma.analysis.create({
-      data: {
-        longDescription,
-        shortDescription
-      }
-    })
+    const longDescription: string = response.text || ''
+    const shortDescription: ANALYSIS_OPERATION = ANALYSIS_OPERATIONS.HOLD
+    await AnalysisService.create(longDescription, shortDescription)
     return NextResponse.json({ success: true }, { status: 200 } as any)
   } catch (error) {
     console.log("Sync error: " + (error as Error).message)

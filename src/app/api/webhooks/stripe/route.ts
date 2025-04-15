@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
-import prisma from "../../../../../lib/prisma";
 import { MailerooClient } from "maileroo";
 import { randomBytes } from 'crypto';
+import { ApiKeyService } from "@/services";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: "2025-03-31.basil",
@@ -30,12 +30,7 @@ export const POST = async (req: NextRequest) => {
     const apiKey = randomBytes(32).toString('hex').toUpperCase();
 
     try {
-      await prisma.apiKey.create({
-        data: {
-          email,
-          apiKey
-        }
-      })
+      await ApiKeyService.create(apiKey, email)
     } catch (error) {
       console.log("Database error: " + (error as Error).message)
       return NextResponse.json({ error: "Database error: " + (error as Error).message }, { status: 500 } as any)

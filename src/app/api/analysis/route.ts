@@ -1,12 +1,9 @@
 import { NextResponse } from "next/server";
-import prisma from "../../../../lib/prisma";
-import { Prisma } from '@prisma/client'
+import { AnalysisService } from "@/services";
 
 export const GET = async () => {
   try {
-    const response: Prisma.PromiseReturnType<any> = await prisma.analysis.findFirst({
-      orderBy: { createdAt: "desc" },
-    } as Prisma.AnalysisFindFirstArgs)
+    const response = await AnalysisService.getLatest();
     return NextResponse.json(response, { status: 200 } as any
     )
   } catch (error) {

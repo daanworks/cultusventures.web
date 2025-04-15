@@ -10,7 +10,7 @@ export const GET = async (req: NextRequest) => {
     const [user, pass]: string[] = credentials
     if (user === process.env.ADMIN_USER && pass === process.env.ADMIN_PASSWORD) {
       const response: ApiKey[] | null = await ApiKeyService.getAll()
-      const data: string[] = (response || []).map((record) => record.apiKey)
+      const data: string[] = (response || []).map((record: ApiKey) => record.apiKey)
       return NextResponse.json(data, { status: 200 })
     } else {
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 403 })

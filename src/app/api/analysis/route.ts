@@ -6,9 +6,6 @@ export const GET = async () => {
     const response = await AnalysisService.getLatest()
     return NextResponse.json(response, { status: 200 })
   } catch (error) {
-    return NextResponse.json(
-      { error: (error as Error).message },
-      { status: 500 },
-    )
+    return NextResponse.json({ error: (error as Error).message }, { status: 500 })
   }
 }

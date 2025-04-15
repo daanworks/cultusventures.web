@@ -9,8 +9,8 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 })
 
 export const POST = async (req: NextRequest) => {
-  const payload = await req.text()
-  const signature = req.headers.get('stripe-signature')!
+  const payload: string = await req.text()
+  const signature: string = req.headers.get('stripe-signature')!
   let event: Stripe.Event
 
   try {
@@ -20,14 +20,12 @@ export const POST = async (req: NextRequest) => {
   }
 
   if (event.type === 'checkout.session.completed') {
-    const session = event.data.object as unknown as Stripe.Checkout.Session
-    const email = session.customer_details?.email
+    const session: Stripe.Checkout.Session = event.data.object
+    const email: string = session.customer_details?.email || ''
 
-    if (!email) {
-      return NextResponse.json({ error: 'No email found' }, { status: 400 })
-    }
+    if (!email) return NextResponse.json({ error: 'No email found' }, { status: 400 })
 
-    const apiKey = randomBytes(32).toString('hex').toUpperCase()
+    const apiKey: string = randomBytes(32).toString('hex').toUpperCase()
 
     try {
       await ApiKeyService.create(apiKey, email)
@@ -36,7 +34,7 @@ export const POST = async (req: NextRequest) => {
       return NextResponse.json({ error: 'Database error: ' + (error as Error).message }, { status: 500 })
     }
 
-    const mailerooClient = MailerooClient.getClient(process.env.MAILEROO_API_KEY)
+    const mailerooClient: MailerooClient = MailerooClient.getClient(process.env.MAILEROO_API_KEY)
     const html = `<div style="font-family:Arial,sans-serif;max-width:600px;margin:auto;padding:20px;background:#f9f9f9;border:1px solid #ddd;border-radius:8px;"><h2 style="color:#333;">🎉 Thank you for subscribing!</h2><p style="font-size:16px;color:#555;">Here is your personal API key:</p><pre style="background:#eee;padding:10px;border-radius:5px;font-size:18px;font-weight:bold;color:#000;">{{API_KEY}}</pre><p style="font-size:14px;color:#777;">Please keep this key safe. You’ll need it to access our API services.</p><hr style="margin:20px 0;"><p style="font-size:12px;color:#aaa;">If you didn’t expect this email, feel free to ignore it or contact support.</p></div>`
     await mailerooClient
       .setFrom('Cultus Ventures', 'no-reply@cultusventures.com')

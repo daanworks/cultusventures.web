@@ -1,2 +1,5 @@
-echo 'Running husky...'
+echo "🧪 Type-checking..."
+tsc --noEmit
+
+echo "🧹 Linting & formatting..."
 npx lint-staged --concurrent false

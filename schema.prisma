@@ -3,23 +3,24 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
   directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
 model Analysis {
-  id                String     @default(cuid()) @id
-  shortDescription  ShortDescription
-  longDescription   String
-  createdAt         DateTime   @default(now()) @map(name: "created_at")
+  id               String           @id @default(cuid())
+  shortDescription ShortDescription
+  longDescription  String
+  createdAt        DateTime         @default(now()) @map(name: "created_at")
 }
 
 model ApiKey {
-  id            String       @default(cuid()) @id
-  email         String
-  apiKey        String       
-  createdAt     DateTime     @default(now()) @map(name: "created_at")
+  id        String   @id @default(cuid())
+  email     String
+  apiKey    String
+  createdAt DateTime @default(now()) @map(name: "created_at")
+
   @@map(name: "apiKey")
 }
 
@@ -28,4 +29,5 @@ enum ShortDescription {
   SELL
   HOLD
   DO_NOTHING @map("DO NOTHING")
+  DCA
 }

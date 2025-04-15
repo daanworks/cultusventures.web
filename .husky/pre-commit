@@ -1,1 +1,2 @@
-echo 'hello!'
+echo 'Running pre commit hooks...'
+npx lint-staged --concurrent false

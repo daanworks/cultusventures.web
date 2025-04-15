@@ -13,8 +13,9 @@ export const GET = async (req: NextRequest) => {
   try {
     const latestItem = await AnalysisService.getLatest()
     if (
-      latestItem.shortDescription === ANALYSIS_OPERATIONS.HOLD ||
-      latestItem.shortDescription === ANALYSIS_OPERATIONS.DO_NOTHING
+      latestItem &&
+      (latestItem.shortDescription === ANALYSIS_OPERATIONS.HOLD ||
+        latestItem.shortDescription === ANALYSIS_OPERATIONS.DO_NOTHING)
     ) {
       await AnalysisService.deleteById(latestItem.id)
     }

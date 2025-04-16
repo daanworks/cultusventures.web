@@ -1,4 +1,4 @@
-import { PrismaClient, Analysis, ApiKey, ShortDescription } from '@prisma/client'
+import { PrismaClient, Analysis, ApiKey, DecisionType } from '@prisma/client'
 import { GenerateContentResponse, GoogleGenAI } from '@google/genai'
 import { MailerooClient } from 'maileroo'
 
@@ -20,11 +20,10 @@ export const AnalysisService = {
       },
     })
   },
-  create: async (longDescription: string, shortDescription: ShortDescription): Promise<void> => {
+  create: async (decision: DecisionType): Promise<void> => {
     await prisma.analysis.create({
       data: {
-        longDescription,
-        shortDescription,
+        decision,
       },
     })
   },

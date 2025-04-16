@@ -9,10 +9,9 @@ datasource db {
 }
 
 model Analysis {
-  id               String           @id @default(cuid())
-  shortDescription ShortDescription
-  longDescription  String
-  createdAt        DateTime         @default(now()) @map(name: "created_at")
+  id        String       @id @default(cuid())
+  decision  DecisionType
+  createdAt DateTime     @default(now()) @map(name: "created_at")
 }
 
 model ApiKey {
@@ -24,7 +23,13 @@ model ApiKey {
   @@map(name: "apiKey")
 }
 
-enum ShortDescription {
+model Decision {
+  id        String       @id @default(cuid())
+  decision  DecisionType
+  createdAt DateTime     @default(now()) @map(name: "created_at")
+}
+
+enum DecisionType {
   BUY
   SELL
   HOLD

@@ -1,14 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { GenerateContentResponse, GoogleGenAI } from '@google/genai'
 import { HOLD, DO_NOTHING, BUY, SELL, DCA } from '@/constants'
-import { AnalysisService } from '@/services'
+import { AiService, AnalysisService, TelegramService } from '@/services'
 import { Analysis, ShortDescription } from '@prisma/client'
 
 export const GET = async (req: NextRequest) => {
   const auth: string = req.headers.get('authorization') || ''
   if (auth !== `Bearer ${process.env.CRON_SECRET}`) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-
-  const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY })
 
   try {
     const latestItem: Analysis | null = await AnalysisService.getLatest()
@@ -24,13 +21,10 @@ export const GET = async (req: NextRequest) => {
       [DO_NOTHING]: 'do nothing with',
       [DCA]: 'dca',
     }
-    const generatedContent: GenerateContentResponse = await ai.models.generateContent({
-      model: 'gemini-2.0-flash',
-      contents: prompts[HOLD],
-    })
-    const longDescription: string = generatedContent.text || ''
+    const longDescription: string = await AiService.generateContent(prompts[HOLD])
     const shortDescription: ShortDescription = HOLD
     await AnalysisService.create(longDescription, shortDescription)
+    await TelegramService.sendMessage(shortDescription)
     return NextResponse.json({ success: true }, { status: 200 })
   } catch (error) {
     console.log('Sync error: ' + (error as Error).message)

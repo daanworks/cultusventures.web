@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { HOLD, DO_NOTHING } from '@/constants'
-import { AnalysisService, TelegramService } from '@/services'
-import { Analysis, DecisionType } from '@prisma/client'
+import { AnalysisService, DecisionService, TelegramService } from '@/services'
+import { Analysis, Decision, DecisionType } from '@prisma/client'
 
 export const GET = async (req: NextRequest) => {
   const auth: string = req.headers.get('authorization') || ''
@@ -11,7 +11,8 @@ export const GET = async (req: NextRequest) => {
     const latestItem: Analysis | null = await AnalysisService.getLatest()
     if (latestItem && (latestItem.decision === HOLD || latestItem.decision === DO_NOTHING))
       await AnalysisService.deleteById(latestItem.id)
-    const decision: DecisionType = HOLD
+    const decisionData: Decision | null = await DecisionService.getLatest()
+    const decision: DecisionType = decisionData?.decision || HOLD
     await AnalysisService.create(decision)
     await TelegramService.sendMessage(decision)
     return NextResponse.json({ success: true }, { status: 200 })

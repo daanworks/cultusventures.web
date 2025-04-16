@@ -1,4 +1,4 @@
-import { PrismaClient, Analysis, ApiKey, DecisionType } from '@prisma/client'
+import { PrismaClient, Analysis, ApiKey, DecisionType, Decision } from '@prisma/client'
 import { GenerateContentResponse, GoogleGenAI } from '@google/genai'
 import { MailerooClient } from 'maileroo'
 
@@ -73,5 +73,14 @@ export const MailService = {
       .setSubject("Thanks for purchasing, here's your API key")
       .setHtml(html)
       .sendBasicEmail()
+  },
+}
+
+export const DecisionService = {
+  getLatest: async (): Promise<Decision | null> => {
+    const response = await prisma.decision.findFirst({
+      orderBy: { createdAt: 'desc' },
+    })
+    return response
   },
 }

@@ -3,3 +3,6 @@ tsc --noEmit
 
 echo "🧹 Linting & formatting..."
 npx lint-staged --concurrent false
+
+echo "⚙️ Unit testing..."
+npm run test

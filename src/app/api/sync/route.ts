@@ -26,3 +26,5 @@ export const GET = async (req: NextRequest) => {
     return NextResponse.json({ error: 'Sync error: ' + (error as Error).message }, { status: 500 })
   }
 }
+
+export const runtime = 'nodejs'

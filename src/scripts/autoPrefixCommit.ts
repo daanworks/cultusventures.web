@@ -12,21 +12,16 @@ if (!commitMessageFilePath) {
 
 try {
   const originalMessage = readFileSync(commitMessageFilePath, 'utf8').trim()
-
   const branch = execSync('git rev-parse --abbrev-ref HEAD').toString().trim()
-
   const match = branch.match(/(CVWEB-\d+)/)
+  const prefix = match ? match[1] : 'NO-ISSUE'
 
-  if (!match) {
-    console.log('ℹ️ No CVWEB- ticket found in branch name, skipping prefix.')
+  if (originalMessage.startsWith(prefix)) {
+    console.log(`✅ Commit already contains prefix`)
     process.exit(0)
   }
 
-  const issueId = match[1]
-
-  if (originalMessage.startsWith(issueId)) process.exit(0)
-
-  const formattedMessage = `${issueId}: ${originalMessage}`
+  const formattedMessage = `${prefix}: ${originalMessage}`
   writeFileSync(commitMessageFilePath, formattedMessage)
 
   console.log(`✅ Commit message updated to: ${formattedMessage}`)

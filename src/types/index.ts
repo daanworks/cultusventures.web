@@ -1,4 +1,5 @@
-export type Price = {
-  symbol: string
-  price: string
+export type BitcoinPrice = {
+  bitcoin: {
+    [currency: string]: number
+  }
 }

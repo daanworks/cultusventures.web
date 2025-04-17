@@ -11,7 +11,7 @@ datasource db {
 model Analysis {
   id        String       @id @default(cuid())
   decision  DecisionType
-  btcPrice  String
+  btcPrice  BigInt
   createdAt DateTime     @default(now()) @map(name: "created_at")
 }
 

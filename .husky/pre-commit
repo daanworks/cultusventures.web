@@ -1,5 +1,10 @@
 echo "🧪 Type-checking..."
 tsc --noEmit
 
+echo
 echo "🧹 Linting & formatting..."
 npx lint-staged --concurrent false
+
+echo
+echo "⚙️ Unit testing..."
+npm run test

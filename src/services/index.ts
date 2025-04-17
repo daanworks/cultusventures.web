@@ -90,6 +90,9 @@ export const DecisionService = {
 export const MarketService = {
   getBtcPrice: async (): Promise<Price | null> => {
     const response = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT')
-    return await response.json()
+    const data = await response.json()
+    console.log('BTC Price DEBUG')
+    console.log(data)
+    return data
   },
 }

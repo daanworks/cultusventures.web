@@ -19,7 +19,7 @@ export default function Home() {
           </div>
         </div>
         <div className="text-3xl pb-12">
-          Providing a data-driven analysis on Bitcoin market trends for individuals and businesses
+          Providing data-driven analysis on Bitcoin market trends for individuals and businesses
         </div>
         <div className="flex flex-col sm:flex-row gap-2">
           <Link href="https://x.com/cultusventures" target="_blank" rel="noopener noreferrer">

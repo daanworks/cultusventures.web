@@ -1,6 +1,7 @@
 import { PrismaClient, Analysis, ApiKey, DecisionType, Decision } from '@prisma/client'
 import { GenerateContentResponse, GoogleGenAI } from '@google/genai'
 import { MailerooClient } from 'maileroo'
+import { Price } from '@/types'
 
 const prisma = new PrismaClient()
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY })
@@ -20,10 +21,11 @@ export const AnalysisService = {
       },
     })
   },
-  create: async (decision: DecisionType): Promise<void> => {
+  create: async (decision: DecisionType, btcPrice: string): Promise<void> => {
     await prisma.analysis.create({
       data: {
         decision,
+        btcPrice,
       },
     })
   },
@@ -82,5 +84,12 @@ export const DecisionService = {
       orderBy: { createdAt: 'desc' },
     })
     return response
+  },
+}
+
+export const MarketService = {
+  getBtcPrice: async (): Promise<Price | null> => {
+    const response = await fetch('https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDT')
+    return await response.json()
   },
 }

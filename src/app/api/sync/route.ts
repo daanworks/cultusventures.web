@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { HOLD, DO_NOTHING } from '@/constants'
 import { AnalysisService, DecisionService, MarketService, TelegramService } from '@/services'
 import { Analysis, Decision, DecisionType } from '@prisma/client'
-import { Price } from '@/types'
+import { BitcoinPrice } from '@/types'
 import { formatPrice } from '@/utils'
 
 export const GET = async (req: NextRequest) => {
@@ -15,10 +15,10 @@ export const GET = async (req: NextRequest) => {
       await AnalysisService.deleteById(latestItem.id)
     const decisionData: Decision | null = await DecisionService.getLatest()
     const decision: DecisionType = decisionData?.decision || HOLD
-    const btcPriceData: Price | null = await MarketService.getBtcPrice()
-    const btcPrice: string = btcPriceData?.price || ''
+    const btcPriceData: BitcoinPrice | null = await MarketService.getBtcPrice()
+    const btcPrice: number = btcPriceData?.bitcoin.usd || 0
     await AnalysisService.create(decision, btcPrice)
-    const message = decision + '\n' + 'BTC Price: ' + formatPrice(btcPrice)
+    const message: string = decision + '\n' + 'BTC Price: ' + formatPrice(btcPrice)
     await TelegramService.sendMessage(message)
     return NextResponse.json({ success: true }, { status: 200 })
   } catch (error) {

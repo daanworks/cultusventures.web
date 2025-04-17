@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { HOLD, DO_NOTHING } from '@/constants'
-import { AnalysisService, DecisionService, TelegramService } from '@/services'
+import { AnalysisService, DecisionService, MarketService, TelegramService } from '@/services'
 import { Analysis, Decision, DecisionType } from '@prisma/client'
+import { Price } from '@/types'
+import { formatPrice } from '@/utils'
 
 export const GET = async (req: NextRequest) => {
   const auth: string = req.headers.get('authorization') || ''
@@ -13,8 +15,11 @@ export const GET = async (req: NextRequest) => {
       await AnalysisService.deleteById(latestItem.id)
     const decisionData: Decision | null = await DecisionService.getLatest()
     const decision: DecisionType = decisionData?.decision || HOLD
-    await AnalysisService.create(decision)
-    await TelegramService.sendMessage(decision)
+    const btcPriceData: Price | null = await MarketService.getBtcPrice()
+    const btcPrice: string = btcPriceData?.price || ''
+    await AnalysisService.create(decision, btcPrice)
+    const message = decision + '\n' + 'BTC Price: ' + formatPrice(btcPrice)
+    await TelegramService.sendMessage(message)
     return NextResponse.json({ success: true }, { status: 200 })
   } catch (error) {
     console.log('Sync error: ' + (error as Error).message)

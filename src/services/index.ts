@@ -36,8 +36,8 @@ export const ApiKeyService = {
     const response = await prisma.apiKey.findMany()
     return response
   },
-  create: async (apiKey: string, email: string): Promise<void> => {
-    await prisma.apiKey.create({ data: { email, apiKey } })
+  create: async (apiKey: string, userId: string): Promise<void> => {
+    await prisma.apiKey.create({ data: { userId, apiKey } })
   },
 }
 

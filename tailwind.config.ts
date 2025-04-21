@@ -1,10 +1,10 @@
-import type { Config } from "tailwindcss";
+import type { Config } from 'tailwindcss'
 
 const config: Config = {
   content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
     colors: {
@@ -12,18 +12,19 @@ const config: Config = {
       black: '#000011',
       blue: '#003096',
       green: '#99D6B5',
-      grey: '#BFBFBF'
+      grey: '#BFBFBF',
+      red: '#D99A9A',
     },
     extend: {
       fontFamily: {
-        sans: ["DM Sans", "sans-serif"],
-        serif: ["Times Now", "serif"]
+        sans: ['DM Sans', 'sans-serif'],
+        serif: ['Times Now', 'serif'],
       },
       borderWidth: {
-        1: "1px",
+        1: '1px',
       },
-    }
+    },
   },
   plugins: [],
-};
-export default config;
+}
+export default config

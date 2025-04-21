@@ -4,12 +4,43 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { config } from '@fortawesome/fontawesome-svg-core'
-import { faCode } from '@fortawesome/free-solid-svg-icons'
+import { faCircleNotch, faCode } from '@fortawesome/free-solid-svg-icons'
 import { faTelegram, faXTwitter } from '@fortawesome/free-brands-svg-icons'
+import Button from '@/app/components/Button'
+import Input from '@/app/components/Input'
+import { useState } from 'react'
+import { validateEmail } from '@/utils'
 
 config.autoAddCss = false
 
 export default function Home() {
+  const [email, setEmail] = useState<string>('')
+  const [loading, setLoading] = useState<boolean>(false)
+
+  const handleClick = async (email: string) => {
+    if (!validateEmail(email)) return alert('Please enter a valid email')
+    setLoading(true)
+    try {
+      const res = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email }),
+      })
+      const data = await res.json()
+      if (data.url) {
+        window.location.href = data.url
+      } else {
+        setLoading(false)
+        alert('Something went wrong. Please try again.')
+      }
+    } catch (error) {
+      setLoading(false)
+      alert(`Failed to start checkout: ${(error as Error).message} Please refresh and try again.`)
+    }
+  }
+
   return (
     <div className="px-6 sm:px-0 w-full max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl mx-auto flex flex-col min-h-screen justify-between">
       <div>
@@ -21,23 +52,44 @@ export default function Home() {
         <div className="text-3xl pb-12">
           Providing data-driven analysis on Bitcoin market trends for individuals and businesses
         </div>
-        <div className="flex flex-col sm:flex-row gap-2">
-          <Link href="https://x.com/cultusventures" target="_blank" rel="noopener noreferrer">
-            <div className="py-3 px-6 border max-w-max rounded-full cursor-pointer flex items-center bg-blue text-white">
-              <div className="font-sans text-sm mr-1">Join the Community</div>
-              <div className="w-[16px] h-[16px]">
-                <FontAwesomeIcon icon={faTelegram} size="xs" />
-              </div>
+        <div
+          className="flex gap-2 xl:p-10 lg:p-8 p-6 rounded-full"
+          style={{
+            backgroundImage: `url(/noisy-gradients.png)`,
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+          }}
+        >
+          <Input
+            placeholder={'Enter your email'}
+            type="email"
+            onChange={(e) => setEmail(e.currentTarget.value)}
+            disabled={loading}
+          />
+          <Button
+            onClick={() => handleClick(email)}
+            disabled={loading}
+            tooltipId="telegram"
+            tooltipContent="Join the Community"
+            tooltipPlacement="top"
+            loading={loading}
+          >
+            <div className={`w-[20px] h-[20px] flex items-center ${loading ? 'animate-spin' : ''}`}>
+              <FontAwesomeIcon icon={loading ? faCircleNotch : faTelegram} spin={loading} />
             </div>
-          </Link>
-          <Link href="https://x.com/cultusventures" target="_blank" rel="noopener noreferrer" className="no-underline">
-            <div className="py-3 px-6 border max-w-max rounded-full cursor-pointer flex items-center text-black">
-              <div className="font-sans text-sm mr-1">Get API Access</div>
-              <div className="w-[16px] h-[12px]">
-                <FontAwesomeIcon icon={faCode} size="xs" />
-              </div>
+          </Button>
+          <Button
+            onClick={() => handleClick(email)}
+            disabled={true}
+            variant="secondary"
+            tooltipId="api"
+            tooltipContent="Get API Access (soon...)"
+            tooltipPlacement="top"
+          >
+            <div className={`w-[20px] h-[20px] flex items-center`}>
+              <FontAwesomeIcon icon={faCode} />
             </div>
-          </Link>
+          </Button>
         </div>
         <div className="pt-16 pb-2">
           We leverage cutting-edge data analytics to provide real-time insights into Bitcoin market trends.

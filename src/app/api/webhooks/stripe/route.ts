@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { MailService, TelegramService, UserService } from '@/services'
 import { User } from '@prisma/client'
@@ -7,7 +7,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2025-03-31.basil',
 })
 
-export const POST = async (req: NextRequest) => {
+export const POST = async (req: Request) => {
   const payload: string = await req.text()
   const signature: string = req.headers.get('Stripe-Signature')!
   let event: Stripe.Event

@@ -1,7 +1,7 @@
-import { Analysis, ApiKey, Decision, DecisionType, PrismaClient } from '@prisma/client'
+import { Analysis, ApiKey, Decision, DecisionType, PrismaClient, User } from '@prisma/client'
 import { GenerateContentResponse, GoogleGenAI } from '@google/genai'
 import { MailerooClient } from 'maileroo'
-import { BitcoinPrice } from '@/types'
+import { BitcoinPrice, TelegramInviteLink } from '@/types'
 
 const prisma = new PrismaClient()
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY })
@@ -36,8 +36,8 @@ export const ApiKeyService = {
     const response = await prisma.apiKey.findMany()
     return response
   },
-  create: async (apiKey: string, email: string): Promise<void> => {
-    await prisma.apiKey.create({ data: { email, apiKey } })
+  create: async (apiKey: string, userId: string): Promise<void> => {
+    await prisma.apiKey.create({ data: { userId, apiKey } })
   },
 }
 
@@ -54,6 +54,21 @@ export const TelegramService = {
       }),
     })
   },
+  createInviteLink: async (): Promise<string> => {
+    const url = `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/createChatInviteLink`
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        chat_id: process.env.TELEGRAM_CHAT_ID,
+        member_limit: 1,
+      }),
+    })
+    const data: TelegramInviteLink = await response.json()
+    return data.result.invite_link || ''
+  },
 }
 
 export const AiService = {
@@ -67,12 +82,12 @@ export const AiService = {
 }
 
 export const MailService = {
-  sendMail: async (to: string): Promise<void> => {
-    const html: string = `<div style="font-family:Arial,sans-serif;max-width:600px;margin:auto;padding:20px;background:#f9f9f9;border:1px solid #ddd;border-radius:8px;"><h2 style="color:#333;">🎉 Thank you for subscribing!</h2><p style="font-size:16px;color:#555;">Here is your personal API key:</p><pre style="background:#eee;padding:10px;border-radius:5px;font-size:18px;font-weight:bold;color:#000;">{{API_KEY}}</pre><p style="font-size:14px;color:#777;">Please keep this key safe. You’ll need it to access our API services.</p><hr style="margin:20px 0;"><p style="font-size:12px;color:#aaa;">If you didn’t expect this email, feel free to ignore it or contact support.</p></div>`
+  sendMail: async (to: string, telegramInviteLink: string): Promise<void> => {
+    const html: string = `<div style="font-family:Arial,sans-serif;max-width:600px;margin:auto;padding:20px;background:#f9f9f9;border:1px solid #ddd;border-radius:8px;"><h2 style="color:#333;">🎉 Thank you for subscribing!</h2><p style="font-size:16px;color:#555;">Here is your Telegram invite link:</p><pre style="background:#eee;padding:10px;border-radius:5px;font-size:18px;font-weight:bold;color:#000;">${telegramInviteLink}</pre><p style="font-size:14px;color:#777;">Please keep this key safe. You’ll need it to access our API services.</p><hr style="margin:20px 0;"><p style="font-size:12px;color:#aaa;">If you didn’t expect this email, feel free to ignore it or contact support.</p></div>`
     await maileroo
       .setFrom('Cultus Ventures', 'no-reply@cultusventures.com')
       .setTo('Cultus Ventures API User', to)
-      .setSubject("Thanks for purchasing, here's your API key")
+      .setSubject("Thanks for purchasing, here's your Telegram invite link")
       .setHtml(html)
       .sendBasicEmail()
   },
@@ -91,5 +106,15 @@ export const MarketService = {
   getBtcPrice: async (): Promise<BitcoinPrice | null> => {
     const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd')
     return await response.json()
+  },
+}
+
+export const UserService = {
+  create: async (email: string): Promise<void> => {
+    await prisma.user.create({ data: { email } })
+  },
+  getByEmail: async (email: string): Promise<User | null> => {
+    const user = await prisma.user.findFirst({ where: { email } })
+    return user
   },
 }

@@ -1,4 +1,4 @@
-import { Analysis, ApiKey, Decision, DecisionType, PrismaClient } from '@prisma/client'
+import { Analysis, ApiKey, Decision, DecisionType, PrismaClient, User } from '@prisma/client'
 import { GenerateContentResponse, GoogleGenAI } from '@google/genai'
 import { MailerooClient } from 'maileroo'
 import { BitcoinPrice, TelegramInviteLink } from '@/types'
@@ -106,5 +106,15 @@ export const MarketService = {
   getBtcPrice: async (): Promise<BitcoinPrice | null> => {
     const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd')
     return await response.json()
+  },
+}
+
+export const UserService = {
+  create: async (email: string): Promise<void> => {
+    await prisma.user.create({ data: { email } })
+  },
+  getByEmail: async (email: string): Promise<User | null> => {
+    const user = await prisma.user.findFirst({ where: { email } })
+    return user
   },
 }

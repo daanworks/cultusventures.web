@@ -21,23 +21,21 @@ export default function Home() {
     if (!validateEmail(email)) return alert('Please enter a valid email')
     setLoading(true)
     try {
-      const res = await fetch('/api/checkout', {
+      const response = await fetch('/api/checkout', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ email }),
       })
-      const data = await res.json()
-      if (data.url) {
-        window.location.href = data.url
-      } else {
-        setLoading(false)
-        alert('Something went wrong. Please try again.')
-      }
+      if (response.status === 409) return alert('Your email is already in use')
+      const data = await response.json()
+      if (data.url) return (window.location.href = data.url)
+      alert('Something went wrong. Please try again.')
     } catch (error) {
-      setLoading(false)
       alert(`Failed to start checkout: ${(error as Error).message} Please refresh and try again.`)
+    } finally {
+      setLoading(false)
     }
   }
 

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
 import { MailService, TelegramService, UserService } from '@/services'
 import { User } from '@prisma/client'
+import { headers } from 'next/headers'
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2025-03-31.basil',
@@ -9,10 +10,8 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 
 export const POST = async (req: NextRequest) => {
   const payload: string = await req.text()
-  const signature: string = req.headers.get('Stripe-Signature')!
+  const signature: string = (await headers()).get('stripe-signature')!
   let event: Stripe.Event
-
-  console.error('DEBUG', payload)
 
   try {
     event = stripe.webhooks.constructEvent(payload, signature, process.env.STRIPE_WEBHOOK_SECRET!)

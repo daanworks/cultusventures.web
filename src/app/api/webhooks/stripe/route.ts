@@ -9,7 +9,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 
 export const POST = async (req: NextRequest) => {
   const payload: string = await req.text()
-  const signature: string = req.headers.get('stripe-signature')!
+  const signature: string = req.headers.get('Stripe-Signature')!
   let event: Stripe.Event
 
   try {

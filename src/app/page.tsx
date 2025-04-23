@@ -17,7 +17,7 @@ export default function Home() {
   const [email, setEmail] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
 
-  const handleClick = async (email: string) => {
+  const handleSubmit = async (email: string) => {
     if (!validateEmail(email)) return alert('Please enter a valid email')
     setLoading(true)
     try {
@@ -50,7 +50,13 @@ export default function Home() {
         <div className="text-3xl pb-12">
           Providing data-driven analysis on Bitcoin market trends for individuals and businesses
         </div>
-        <div className="flex gap-2 xl:p-10 lg:p-8 p-6 rounded-full bg-gradient bg-no-repeat bg-cover bg-top">
+        <form
+          className="flex gap-2 xl:p-10 lg:p-8 p-6 rounded-full bg-gradient bg-no-repeat bg-cover bg-top"
+          onSubmit={(event) => {
+            event.preventDefault()
+            handleSubmit(email)
+          }}
+        >
           <Input
             placeholder={'Enter your email'}
             type="email"
@@ -58,7 +64,6 @@ export default function Home() {
             disabled={loading}
           />
           <Button
-            onClick={() => handleClick(email)}
             disabled={loading}
             tooltipId="telegram"
             tooltipContent="Join the Community"
@@ -70,7 +75,6 @@ export default function Home() {
             </div>
           </Button>
           <Button
-            onClick={() => handleClick(email)}
             disabled={true}
             variant="secondary"
             tooltipId="api"
@@ -81,7 +85,7 @@ export default function Home() {
               <FontAwesomeIcon icon={faCode} />
             </div>
           </Button>
-        </div>
+        </form>
         <div className="pt-16 pb-2">
           We leverage cutting-edge data analytics to provide real-time insights into Bitcoin market trends.
         </div>

@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
 import { config } from '@fortawesome/fontawesome-svg-core'
 import classNames from 'classnames'
-import Skeleton from '@/app/components/Skeleton'
+import Skeleton from '@/components/Skeleton'
 
 config.autoAddCss = false
 

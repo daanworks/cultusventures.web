@@ -1,17 +1,19 @@
 'use client'
 
-import Image from 'next/image'
 import Link from 'next/link'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { config } from '@fortawesome/fontawesome-svg-core'
+import { config as fontAwesomeConfig } from '@fortawesome/fontawesome-svg-core'
 import { faCircleNotch, faCode } from '@fortawesome/free-solid-svg-icons'
 import { faTelegram, faXTwitter } from '@fortawesome/free-brands-svg-icons'
-import Button from '@/app/components/Button'
-import Input from '@/app/components/Input'
+import Button from '@/components/Button'
+import Input from '@/components/Input'
 import { useState } from 'react'
 import { validateEmail } from '@/utils'
+import Container from '@/components/Container'
+import Logo from '@/components/Logo'
+import config from '@/config'
 
-config.autoAddCss = false
+fontAwesomeConfig.autoAddCss = false
 
 export default function Home() {
   const [email, setEmail] = useState<string>('')
@@ -40,16 +42,12 @@ export default function Home() {
   }
 
   return (
-    <div className="px-6 sm:px-0 w-full max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl mx-auto flex flex-col min-h-screen justify-between">
+    <Container className="flex flex-col justify-between">
       <div>
-        <div className="flex gap-3 items-center pt-8 pb-16">
-          <div className="lg:w-[68px] lg:h-[68px] md:w-[58px] md:h-[58px] w-[50px] h-[50px] relative">
-            <Image src="/logo.png" alt="logo" fill />
-          </div>
+        <div className="pt-8 pb-16">
+          <Logo />
         </div>
-        <div className="text-3xl pb-12">
-          Providing data-driven analysis on Bitcoin market trends for individuals and businesses
-        </div>
+        <h1 className="pb-12">{config.content.title}</h1>
         <form
           className="flex gap-2 xl:p-10 lg:p-8 p-6 rounded-full bg-gradient bg-no-repeat bg-cover bg-top"
           onSubmit={(event) => {
@@ -58,7 +56,7 @@ export default function Home() {
           }}
         >
           <Input
-            placeholder={'Enter your email'}
+            placeholder={config.content.input.placeholder}
             type="email"
             onChange={(e) => setEmail(e.currentTarget.value)}
             disabled={loading}
@@ -66,7 +64,7 @@ export default function Home() {
           <Button
             disabled={loading}
             tooltipId="telegram"
-            tooltipContent="Join the Community"
+            tooltipContent={config.content.joinButton.tooltipContent}
             tooltipPlacement="top"
             loading={loading}
           >
@@ -78,7 +76,7 @@ export default function Home() {
             disabled={true}
             variant="secondary"
             tooltipId="api"
-            tooltipContent="Get API Access (soon...)"
+            tooltipContent={config.content.apiButton.tooltipContent}
             tooltipPlacement="top"
           >
             <div className={`w-[20px] h-[20px] flex items-center`}>
@@ -86,21 +84,14 @@ export default function Home() {
             </div>
           </Button>
         </form>
-        <div className="pt-16 pb-2">
-          We leverage cutting-edge data analytics to provide real-time insights into Bitcoin market trends.
-        </div>
-        <div>
-          Our data-driven solutions empowers individuals and businesses with advanced market analytics, enabling them to
-          navigate the volatile crypto landscape with precision and confidence.
+        <div className="pt-16 flex flex-col gap-4">
+          {config.content.paragraphs.map((paragraph, index) => (
+            <p key={index}>{paragraph}</p>
+          ))}
         </div>
       </div>
       <div className="font-sans text-xs pb-6 pt-32">
-        <div className="pb-6 text-grey">
-          This service does not provide financial or investment advice. All signals are generated automatically and
-          should not be relied upon for making trading decisions. Users should conduct their own research before
-          investing. By using this service, you acknowledge that trading cryptocurrencies carries risk and that past
-          performance is not indicative of future results.
-        </div>
+        <div className="pb-6 text-grey">{config.content.disclaimer}</div>
         <div className="flex flex-row items-center gap-1">
           <div>© {new Date().getFullYear()}, Cultus Ventures</div>
           <div>|</div>
@@ -117,6 +108,6 @@ export default function Home() {
           </Link>
         </div>
       </div>
-    </div>
+    </Container>
   )
 }

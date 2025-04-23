@@ -20,3 +20,20 @@ export type TelegramInviteLink = {
     is_revoked: boolean
   }
 }
+
+export type Config = {
+  content: {
+    title: string
+    input: {
+      placeholder: string
+    }
+    joinButton: {
+      tooltipContent: string
+    }
+    apiButton: {
+      tooltipContent: string
+    }
+    paragraphs: string[]
+    disclaimer: string
+  }
+}

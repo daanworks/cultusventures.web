@@ -50,14 +50,7 @@ export default function Home() {
         <div className="text-3xl pb-12">
           Providing data-driven analysis on Bitcoin market trends for individuals and businesses
         </div>
-        <div
-          className="flex gap-2 xl:p-10 lg:p-8 p-6 rounded-full"
-          style={{
-            backgroundImage: `url(/noisy-gradients.png)`,
-            backgroundSize: 'cover',
-            backgroundRepeat: 'no-repeat',
-          }}
-        >
+        <div className="flex gap-2 xl:p-10 lg:p-8 p-6 rounded-full bg-gradient bg-no-repeat bg-cover bg-top">
           <Input
             placeholder={'Enter your email'}
             type="email"

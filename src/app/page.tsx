@@ -6,10 +6,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { config } from '@fortawesome/fontawesome-svg-core'
 import { faCircleNotch, faCode } from '@fortawesome/free-solid-svg-icons'
 import { faTelegram, faXTwitter } from '@fortawesome/free-brands-svg-icons'
-import Button from '@/app/components/Button'
-import Input from '@/app/components/Input'
+import Button from '@/components/Button'
+import Input from '@/components/Input'
 import { useState } from 'react'
 import { validateEmail } from '@/utils'
+import Container from '@/components/Container'
 
 config.autoAddCss = false
 
@@ -40,7 +41,7 @@ export default function Home() {
   }
 
   return (
-    <div className="px-6 sm:px-0 w-full max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl mx-auto flex flex-col min-h-screen justify-between">
+    <Container className="flex flex-col justify-between">
       <div>
         <div className="flex gap-3 items-center pt-8 pb-16">
           <div className="lg:w-[68px] lg:h-[68px] md:w-[58px] md:h-[58px] w-[50px] h-[50px] relative">
@@ -117,6 +118,6 @@ export default function Home() {
           </Link>
         </div>
       </div>
-    </div>
+    </Container>
   )
 }

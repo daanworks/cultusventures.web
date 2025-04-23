@@ -6,6 +6,19 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2025-03-31.basil',
 })
 
+export const GET = async (req: NextRequest) => {
+  const searchParams = req.nextUrl.searchParams
+  const sessionId = searchParams.get('session_id')
+  if (!sessionId) return NextResponse.json({ error: 'Invalid session_id' }, { status: 400 })
+  try {
+    const session = await stripe.checkout.sessions.retrieve(sessionId)
+    return NextResponse.json({ session }, { status: 200 })
+  } catch (error) {
+    console.error('Error retrieving session:', error)
+    return NextResponse.json({ error: 'Failed to retrieve session' }, { status: 500 })
+  }
+}
+
 export const POST = async (req: NextRequest) => {
   if (req.method !== 'POST') return NextResponse.json({ error: 'Method Not Allowed' }, { status: 405 })
   try {

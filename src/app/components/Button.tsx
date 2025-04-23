@@ -6,7 +6,7 @@ type Variant = 'primary' | 'secondary'
 
 type Props = {
   variant?: Variant
-  onClick: () => void
+  onClick?: () => void
   children: React.ReactNode
   disabled?: boolean
   tooltipId: string

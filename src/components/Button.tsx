@@ -36,7 +36,7 @@ const Button: FC<Props> = ({
           'p-3 border max-w-max rounded-full cursor-pointer flex items-center whitespace-nowrap',
           variantClasses[variant],
           loading && '!cursor-progress opacity-70 brightness-110',
-          disabled && '!cursor-not-allowed',
+          disabled && '!cursor-not-allowed opacity-70 brightness-110',
         )}
         onClick={onClick}
         disabled={disabled}

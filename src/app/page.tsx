@@ -62,7 +62,6 @@ export default function Home() {
             disabled={loading}
           />
           <Button
-            disabled={loading}
             tooltipId="telegram"
             tooltipContent={config.content.joinButton.tooltipContent}
             tooltipPlacement="top"

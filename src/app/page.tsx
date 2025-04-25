@@ -83,13 +83,16 @@ export default function Home() {
             </div>
           </Button>
         </form>
-        <div className="pt-16 flex flex-col gap-4">
+        <div className="pt-16 flex flex-col gap-4 text-grey-950">
           {config.content.paragraphs.map((paragraph, index) => (
             <p key={index}>{paragraph}</p>
           ))}
+          <div className="font-sans text-md pt-12 text-black">
+            Ready to explore? <a href="mailto:cultusventures@gmail.com">Let&#39;s talk.</a>
+          </div>
         </div>
       </div>
-      <div className="font-sans text-xs pb-6 pt-32">
+      <div className="font-sans text-xs pb-6 pt-20">
         <div className="pb-6 text-grey">{config.content.disclaimer}</div>
         <div className="flex flex-row items-center gap-1">
           <div>© {new Date().getFullYear()}, Cultus Ventures</div>

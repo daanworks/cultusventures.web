@@ -2,7 +2,7 @@ import { Config } from '@/types'
 
 const config: Config = {
   content: {
-    title: 'Providing data-driven analysis on Bitcoin market trends for individuals and businesses',
+    title: 'Empowering innovators to think independently and lead their own path in Bitcoin strategy',
     input: {
       placeholder: 'Enter your email',
     },
@@ -13,11 +13,11 @@ const config: Config = {
       tooltipContent: 'Get API Access (soon...)',
     },
     paragraphs: [
-      'We leverage cutting-edge data analytics to provide real-time insights into Bitcoin market trends.',
-      'Our data-driven solutions empowers individuals and businesses with advanced market analytics, enabling them to navigate the volatile crypto landscape with precision and confidence.',
+      'Our data-driven solutions empowers individuals with advanced market analytics, focusing on timeless frameworks, pattern recognition, and big-picture thinking.',
+      "We also collaborate with businesses that are exploring how Bitcoin fits into their broader strategy. Whether it's treasury considerations, internal education, or a desire to better understand the evolving landscape, we offer personalized discussions designed to support thoughtful, forward-looking decision making.",
     ],
     disclaimer:
-      'This service does not provide financial or investment advice. All signals are generated automatically and should not be relied upon for making trading decisions. Users should conduct their own research before investing. By using this service, you acknowledge that trading cryptocurrencies carries risk and that past performance is not indicative of future results.',
+      'Our content is for informational purposes only and does not constitute financial advice. All signals are automated and should be seen as one perspective among many. Please do your own research—Bitcoin involves risk, and past trends do not guarantee future outcomes.',
   },
 }
 

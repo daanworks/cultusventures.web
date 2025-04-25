@@ -35,6 +35,7 @@ const Button: FC<Props> = ({
         className={classNames(
           'p-3 border max-w-max rounded-full cursor-pointer flex items-center whitespace-nowrap',
           variantClasses[variant],
+          !disabled && 'hover:brightness-90 transition duration-200',
           loading && '!cursor-progress opacity-70 brightness-110',
           disabled && '!cursor-not-allowed opacity-70 brightness-110',
         )}

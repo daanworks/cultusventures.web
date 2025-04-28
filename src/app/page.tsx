@@ -87,8 +87,8 @@ export default function Home() {
           {config.content.paragraphs.map((paragraph, index) => (
             <p key={index}>{paragraph}</p>
           ))}
-          <div className="font-sans text-md pt-12 text-black">
-            Ready to explore? <a href="mailto:cultusventures@gmail.com">Let&#39;s talk.</a>
+          <div className="font-sans text-md pt-6 text-black">
+            Curious to learn more? <a href="mailto:cultusventures@gmail.com">Let&#39;s talk.</a>
           </div>
         </div>
       </div>

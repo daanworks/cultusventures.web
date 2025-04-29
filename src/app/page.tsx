@@ -88,7 +88,7 @@ export default function Home() {
             <p key={index}>{paragraph}</p>
           ))}
           <div className="font-sans text-md pt-6 text-black">
-            Curious to learn more? <a href="mailto:cultusventures@gmail.com">Let&#39;s talk.</a>
+            Curious to learn more? <a href="mailto:info@cultusventures.com">Let&#39;s talk.</a>
           </div>
         </div>
       </div>

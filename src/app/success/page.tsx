@@ -6,6 +6,7 @@ import { faCheckCircle } from '@fortawesome/free-solid-svg-icons'
 import { config } from '@fortawesome/fontawesome-svg-core'
 import classNames from 'classnames'
 import Skeleton from '@/components/Skeleton'
+import Link from 'next/link'
 
 config.autoAddCss = false
 
@@ -50,6 +51,9 @@ const SuccessPage = ({ searchParams }: { searchParams: { session_id?: string } }
         We’ve sent an email to <strong>{email}</strong>.
       </p>
       <p className="text-sm">Check your inbox for further instructions.</p>
+      <Link href="/" className="text-sm pt-6">
+        Go back to the main page
+      </Link>
     </div>
   )
 }

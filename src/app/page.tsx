@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { config as fontAwesomeConfig } from '@fortawesome/fontawesome-svg-core'
+import '@fortawesome/fontawesome-svg-core/styles.css'
 import { faCircleNotch, faCode } from '@fortawesome/free-solid-svg-icons'
 import { faTelegram, faXTwitter } from '@fortawesome/free-brands-svg-icons'
 import Button from '@/components/Button'
@@ -49,7 +50,7 @@ export default function Home() {
         </div>
         <h1 className="pb-12">{config.content.title}</h1>
         <form
-          className="flex gap-2 xl:p-10 lg:p-8 md:p-6 sm:p-4 p-2 rounded-full bg-gradient bg-no-repeat bg-cover bg-top md:-mx-24 sm:-mx-8 -mx-0"
+          className="flex gap-2 xl:p-10 lg:p-8 md:p-6 sm:p-4 p-4 rounded-full bg-gradient bg-no-repeat bg-cover bg-top md:-mx-24 sm:-mx-8 -mx-0"
           onSubmit={(event) => {
             event.preventDefault()
             handleSubmit(email)

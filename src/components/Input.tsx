@@ -13,7 +13,7 @@ const Input: FC<
   return (
     <input
       className={classNames(
-        'px-3 font-sans text-xs block w-full rounded-full border border-grey text-black focus:outline-none focus:ring-0',
+        'px-3 font-sans block w-full rounded-full border border-grey text-black focus:outline-none focus:ring-0 text-base',
         disabled && 'cursor-not-allowed',
       )}
       disabled={disabled}

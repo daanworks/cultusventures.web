@@ -1,29 +1,29 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
 
 @font-face {
-  font-family: "Times Now";
-  src: url("/TimesNow-SemiLight.woff");
+  font-family: 'Times Now';
+  src: url('/TimesNow-SemiLight.woff');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: "Times Now";
-  src: url("/TimesNow-SemiBold.woff");
+  font-family: 'Times Now';
+  src: url('/TimesNow-SemiBold.woff');
   font-weight: bold;
   font-style: normal;
 }
 
 @font-face {
-  font-family: "Times Now";
-  src: url("/TimesNow-SemiLightItalic.woff");
+  font-family: 'Times Now';
+  src: url('/TimesNow-SemiLightItalic.woff');
   font-weight: normal;
   font-style: italic;
 }
 
 @font-face {
-  font-family: "Times Now";
-  src: url("/TimesNow-SemiBoldItalic.woff");
+  font-family: 'Times Now';
+  src: url('/TimesNow-SemiBoldItalic.woff');
   font-weight: bold;
   font-style: italic;
 }
@@ -39,15 +39,15 @@
     @apply font-serif;
     @apply subpixel-antialiased;
     @apply overscroll-none;
-    @apply text-justify
+    @apply text-justify;
   }
   body {
     font-size: 18px;
     min-height: 100vh;
-    background: white;
-    background-image: radial-gradient(whitesmoke 1px, transparent 0);
-    background-size: 10px 10px;
-    background-position: -8px -8px;
+    /*background: white;*/
+    /*background-image: radial-gradient(whitesmoke 1px, transparent 0);*/
+    /*background-size: 10px 10px;*/
+    /*background-position: -8px -8px;*/
   }
   a {
     @apply text-blue underline;

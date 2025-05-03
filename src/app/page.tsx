@@ -42,6 +42,14 @@ export default function Home() {
     }
   }
 
+  if (process.env.NODE_ENV === 'production')
+    return (
+      <div className="flex flex-col gap-2 justify-center items-center h-screen">
+        <Logo />
+        <h1>Coming soon...</h1>
+      </div>
+    )
+
   return (
     <Container className="flex flex-col justify-between">
       <div>

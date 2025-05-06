@@ -105,7 +105,7 @@ export default function Home() {
             href="https://x.com/cultusventures"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex flex-row items-center gap-1 no-underline text-black"
+            className="flex flex-row gap-1 no-underline text-black"
           >
             <div>Follow us on</div>
             <div className="h-[11px] w-[11px]">

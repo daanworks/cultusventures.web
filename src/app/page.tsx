@@ -93,9 +93,16 @@ export default function Home() {
           </Button>
         </form>
         <div className="pt-16 flex flex-col gap-4 text-grey-950">
-          {config.content.paragraphs.map((paragraph, index) => (
-            <p key={index}>{paragraph}</p>
-          ))}
+          <p>
+            We guide individuals and businesses through the Bitcoin landscape with clarity and strategic insight. We
+            believe Bitcoin offers a rare opportunity to build meaningful wealth—but only through patience, timing, and
+            independent thinking.
+          </p>
+          <p>
+            Through our <b>weekly newsletter, direct API access, and tailored consulting sessions</b>, we empower our
+            clients to shape their Bitcoin strategy with confidence and control—free from the noise of hype and
+            speculation.
+          </p>
           <div className="font-sans text-md pt-6 text-black">
             Curious to learn more? <a href="mailto:info@cultusventures.com">Let&#39;s talk.</a>
           </div>

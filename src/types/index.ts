@@ -33,7 +33,6 @@ export type Config = {
     apiButton: {
       tooltipContent: string
     }
-    paragraphs: string[]
     disclaimer: string
   }
 }

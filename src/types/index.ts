@@ -27,7 +27,7 @@ export type Config = {
     input: {
       placeholder: string
     }
-    joinButton: {
+    newsletterButton: {
       tooltipContent: string
     }
     apiButton: {

@@ -4,8 +4,8 @@ import Link from 'next/link'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { config as fontAwesomeConfig } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
-import { faCircleNotch, faCode } from '@fortawesome/free-solid-svg-icons'
-import { faTelegram, faXTwitter } from '@fortawesome/free-brands-svg-icons'
+import { faCircleNotch, faCode, faEnvelope } from '@fortawesome/free-solid-svg-icons'
+import { faXTwitter } from '@fortawesome/free-brands-svg-icons'
 import Button from '@/components/Button'
 import Input from '@/components/Input'
 import { useState } from 'react'
@@ -42,14 +42,6 @@ export default function Home() {
     }
   }
 
-  if (process.env.NODE_ENV === 'production')
-    return (
-      <div className="flex flex-col gap-2 justify-center items-center h-screen">
-        <Logo />
-        <h1>Coming soon...</h1>
-      </div>
-    )
-
   return (
     <Container className="flex flex-col justify-between">
       <div>
@@ -72,13 +64,11 @@ export default function Home() {
           />
           <Button
             tooltipId="telegram"
-            tooltipContent={config.content.joinButton.tooltipContent}
+            tooltipContent={config.content.newsletterButton.tooltipContent}
             tooltipPlacement="top"
             loading={loading}
           >
-            <div className={`w-[20px] h-[20px] flex items-center ${loading ? 'animate-spin' : ''}`}>
-              <FontAwesomeIcon icon={loading ? faCircleNotch : faTelegram} spin={loading} />
-            </div>
+            <FontAwesomeIcon icon={loading ? faCircleNotch : faEnvelope} spin={loading} size="lg" />
           </Button>
           <Button
             disabled={true}
@@ -87,9 +77,7 @@ export default function Home() {
             tooltipContent={config.content.apiButton.tooltipContent}
             tooltipPlacement="top"
           >
-            <div className={`w-[20px] h-[20px] flex items-center`}>
-              <FontAwesomeIcon icon={faCode} />
-            </div>
+            <FontAwesomeIcon icon={faCode} />
           </Button>
         </form>
         <div className="pt-16 flex flex-col gap-4 text-grey-950">

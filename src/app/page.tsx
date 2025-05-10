@@ -13,10 +13,12 @@ import { validateEmail } from '@/utils'
 import Container from '@/components/Container'
 import Logo from '@/components/Logo'
 import config from '@/config'
+import { useRouter } from 'next/navigation'
 
 fontAwesomeConfig.autoAddCss = false
 
 export default function Home() {
+  const router = useRouter()
   const [email, setEmail] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
 
@@ -24,21 +26,18 @@ export default function Home() {
     if (!validateEmail(email)) return alert('Please enter a valid email')
     setLoading(true)
     try {
-      const response = await fetch('/api/checkout', {
-        method: 'POST',
+      await fetch('/api/subscription', {
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ email }),
       })
-      if (response.status === 409) return alert('Your email is already in use')
-      const data = await response.json()
-      if (data.url) return (window.location.href = data.url)
-      alert('Something went wrong. Please try again.')
     } catch (error) {
-      alert(`Failed to start checkout: ${(error as Error).message} Please refresh and try again.`)
+      alert(`Failed to subscribe: ${(error as Error).message} Please refresh and try again.`)
     } finally {
       setLoading(false)
+      router.push(`/success?email=${email}`)
     }
   }
 

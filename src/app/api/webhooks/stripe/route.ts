@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import Stripe from 'stripe'
-import { MailService, TelegramService, UserService } from '@/services'
+import { UserService } from '@/services'
 import { User } from '@prisma/client'
 import { headers } from 'next/headers'
 
@@ -26,8 +26,8 @@ export const POST = async (req: NextRequest) => {
     const user: User | null = await UserService.getByEmail(email)
     if (user) return NextResponse.json({ error: 'User already exists' }, { status: 400 })
     await UserService.create(email)
-    const telegramInviteLink: string = await TelegramService.createInviteLink()
-    await MailService.sendMail(email, telegramInviteLink)
+    // const telegramInviteLink: string = await TelegramService.createInviteLink()
+    // await MailService.sendMail(email, telegramInviteLink)
     return NextResponse.json({ success: true })
   }
 

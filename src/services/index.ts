@@ -2,6 +2,7 @@ import { Analysis, ApiKey, Decision, DecisionType, PrismaClient, User } from '@p
 import { GenerateContentResponse, GoogleGenAI } from '@google/genai'
 import { MailerooClient } from 'maileroo'
 import { BitcoinPrice, TelegramInviteLink } from '@/types'
+import crypto from 'crypto'
 
 const prisma = new PrismaClient()
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY })
@@ -82,12 +83,12 @@ export const AiService = {
 }
 
 export const MailService = {
-  sendMail: async (to: string, telegramInviteLink: string): Promise<void> => {
-    const html = `<div style="font-family:Arial,sans-serif;max-width:600px;margin:auto;padding:20px;background:#FCFCFC;border:1px solid #D3D3D3;border-radius:8px;"><div style="margin-bottom:20px;"><img src="https://www.cultusventures.com/logo.png" alt="Cultus Ventures Logo" style="height:40px;margin-bottom:10px;" /><h2 style="color:#000011;margin:0;">You made it – welcome aboard!</h2></div><p style="font-size:16px;color:#4F4F4F;">Here is your Telegram invite link:</p><pre style="background:#E8E8E8;padding:10px;border-radius:5px;font-size:18px;font-weight:bold;color:#003096;">${telegramInviteLink}</pre><p style="font-size:14px;color:#6B6B6B;">Please note: this link is single-use only and cannot be reused once accessed.</p><hr style="margin:20px 0;border-color:#D3D3D3;"><p style="font-size:12px;color:#878787;">If you didn’t expect this email, feel free to ignore it or contact support at <a href="mailto:info@cultusventures.com" style="color:#003096;text-decoration:underline;">cultusventures@gmail.com</a>.</p></div>`
+  sendMail: async (to: string): Promise<void> => {
+    const html = `<div style="font-family:Arial,sans-serif;max-width:600px;margin:auto;padding:20px;background:#FCFCFC;border:1px solid #D3D3D3;border-radius:8px;"><div style="margin-bottom:20px;"><img src="https://www.cultusventures.com/logo.png" alt="Cultus Ventures Logo" style="height:60px;margin-bottom:30px;" /><h2 style="color:#000011;margin:0;">Welcome to the Cultus Ventures Newsletter!</h2></div><p style="font-size:16px;color:#4F4F4F;">You’re officially on the list. From now on, you’ll receive:</p><ul style="font-size:16px;color:#4F4F4F;line-height:1.6;"><li>Insights on Bitcoin investing</li><li>Exclusive updates on our latest positions</li><li>Educational content to empower your financial journey</li></ul><p style="font-size:16px;color:#4F4F4F;">We’re excited to have you with us. <a href="https://x.com/cultusventures" style="color:#003096;text-decoration:underline;">Follow us on X</a> to stay even more connected.</p><hr style="margin:20px 0;border-color:#D3D3D3;"><p style="font-size:12px;color:#878787;">If you didn’t subscribe to this newsletter, feel free to ignore this email or contact us at <a href="mailto:info@cultusventures.com" style="color:#003096;text-decoration:underline;">info@cultusventures.com</a>.</p></div>`
     await maileroo
       .setFrom('Cultus Ventures', 'no-reply@cultusventures.com')
       .setTo('Cultus Ventures API User', to)
-      .setSubject("Thanks for purchasing, here's your Telegram invite link")
+      .setSubject('Thanks for subscribing!')
       .setHtml(html)
       .sendBasicEmail()
   },
@@ -114,7 +115,32 @@ export const UserService = {
     await prisma.user.create({ data: { email } })
   },
   getByEmail: async (email: string): Promise<User | null> => {
-    const user = await prisma.user.findFirst({ where: { email } })
-    return user
+    const response = await prisma.user.findFirst({ where: { email } })
+    return response
+  },
+  upsert: async ({ email, subscribed }: { email: string; subscribed: boolean }): Promise<void> => {
+    await prisma.user.upsert({
+      where: { email },
+      update: { subscribed: true },
+      create: { email, subscribed },
+    })
+  },
+}
+
+export const SubscriptionService = {
+  upsert: async (email: string): Promise<void> => {
+    const emailHash = crypto.createHash('md5').update(email.toLowerCase()).digest('hex')
+    const url = `https://${process.env.MAILCHIMP_DATACENTER}.api.mailchimp.com/3.0/lists/${process.env.MAILCHIMP_AUDIENCE_ID}/members/${emailHash}`
+    await fetch(url, {
+      method: 'PUT',
+      headers: {
+        Authorization: `Basic ${Buffer.from(`anystring:${process.env.MAILCHIMP_API_KEY}`).toString('base64')}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email_address: email,
+        status_if_new: 'subscribed',
+      }),
+    })
   },
 }

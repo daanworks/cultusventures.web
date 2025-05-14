@@ -21,7 +21,7 @@ export default function Home() {
           <Logo />
         </div>
         <h1 className="pb-12">{config.content.title}</h1>
-        <div className="flex gap-3">
+        <div className="flex gap-3 flex-col sm:flex-row">
           <Link href="https://x.com/cultusventures" target="_blank" rel="noopener noreferrer">
             <Button className="gap-1">
               Follow us on
@@ -51,11 +51,11 @@ export default function Home() {
       </div>
       <div className="font-sans text-xs pb-6 pt-20">
         <div className="pb-6 text-grey">{config.content.disclaimer}</div>
-        <div className="flex flex-row items-center gap-1">
+        <div className="flex sm:flex-row flex-col items-start sm:items-center gap-1">
           <div>© {new Date().getFullYear()}, Cultus Ventures</div>
-          <div>|</div>
+          <div className="hidden sm:block">|</div>
           <div>info@cultusventures.com</div>
-          <div>|</div>
+          <div className="hidden sm:block">|</div>
           <Link
             href="https://x.com/cultusventures"
             target="_blank"

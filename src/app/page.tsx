@@ -4,91 +4,45 @@ import Link from 'next/link'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { config as fontAwesomeConfig } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
-import { faCircleNotch, faCode, faEnvelope } from '@fortawesome/free-solid-svg-icons'
+import { faEnvelope } from '@fortawesome/free-regular-svg-icons'
 import { faXTwitter } from '@fortawesome/free-brands-svg-icons'
 import Button from '@/components/Button'
-import Input from '@/components/Input'
-import { useState } from 'react'
-import { validateEmail } from '@/utils'
 import Container from '@/components/Container'
 import Logo from '@/components/Logo'
 import config from '@/config'
-import { useRouter } from 'next/navigation'
 
 fontAwesomeConfig.autoAddCss = false
 
 export default function Home() {
-  const router = useRouter()
-  const [email, setEmail] = useState<string>('')
-  const [loading, setLoading] = useState<boolean>(false)
-
-  const handleSubmit = async (email: string) => {
-    if (!validateEmail(email)) return alert('Please enter a valid email')
-    setLoading(true)
-    try {
-      await fetch('/api/subscription', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email }),
-      })
-    } catch (error) {
-      alert(`Failed to subscribe: ${(error as Error).message} Please refresh and try again.`)
-    } finally {
-      setLoading(false)
-      router.push(`/success?email=${email}`)
-    }
-  }
-
   return (
     <Container className="flex flex-col justify-between">
       <div>
-        <div className="pt-8 pb-16">
+        <div className="pt-8 pb-20">
           <Logo />
         </div>
         <h1 className="pb-12">{config.content.title}</h1>
-        <form
-          className="flex gap-2 xl:p-10 lg:p-8 md:p-6 sm:p-4 p-4 rounded-full bg-gradient bg-no-repeat bg-cover bg-top md:-mx-24 sm:-mx-8 -mx-0"
-          onSubmit={(event) => {
-            event.preventDefault()
-            handleSubmit(email)
-          }}
-        >
-          <Input
-            placeholder={config.content.input.placeholder}
-            type="email"
-            onChange={(e) => setEmail(e.currentTarget.value)}
-            disabled={loading}
-          />
-          <Button
-            tooltipId="telegram"
-            tooltipContent={config.content.newsletterButton.tooltipContent}
-            tooltipPlacement="top"
-            loading={loading}
-          >
-            <FontAwesomeIcon icon={loading ? faCircleNotch : faEnvelope} spin={loading} size="lg" />
-          </Button>
-          <Button
-            disabled={true}
-            variant="secondary"
-            tooltipId="api"
-            tooltipContent={config.content.apiButton.tooltipContent}
-            tooltipPlacement="top"
-          >
-            <FontAwesomeIcon icon={faCode} />
-          </Button>
-        </form>
+        <div className="flex gap-3">
+          <Link href="https://x.com/cultusventures" target="_blank" rel="noopener noreferrer">
+            <Button className="gap-1">
+              Follow us on
+              <FontAwesomeIcon icon={faXTwitter} />
+            </Button>
+          </Link>
+          <a href="mailto:info@cultusventures.com" className="no-underline">
+            <Button className="gap-1" variant="secondary">
+              Send us a message
+              <FontAwesomeIcon icon={faEnvelope} />
+            </Button>
+          </a>
+        </div>
         <div className="pt-16 flex flex-col gap-4 text-grey-950">
           <p>
-            We guide individuals and businesses through the Bitcoin landscape with clarity and strategic insight. We
-            believe Bitcoin offers a rare opportunity to build meaningful wealth—but only through patience, timing, and
-            independent thinking.
+            Exploring the Bitcoin landscape with clarity and strategic insight. Bitcoin presents a rare opportunity to
+            build meaningful wealth — but only through patience, timing, and independent thinking.
           </p>
           <p>
-            Through our <b>weekly newsletter, direct API access, and tailored consulting sessions</b>, we empower our
-            clients to shape their Bitcoin strategy with confidence and control—free from the noise of hype and
-            speculation.
+            Providing research, tools, and insight to help others understand Bitcoin’s evolving role in the future of
+            money.
           </p>
           <div className="font-sans text-md pt-6 text-black">
             Curious to learn more? <a href="mailto:info@cultusventures.com">Let&#39;s talk.</a>
@@ -99,6 +53,8 @@ export default function Home() {
         <div className="pb-6 text-grey">{config.content.disclaimer}</div>
         <div className="flex flex-row items-center gap-1">
           <div>© {new Date().getFullYear()}, Cultus Ventures</div>
+          <div>|</div>
+          <div>info@cultusventures.com</div>
           <div>|</div>
           <Link
             href="https://x.com/cultusventures"

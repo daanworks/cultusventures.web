@@ -2,7 +2,7 @@ import { Config } from '@/types'
 
 const config: Config = {
   content: {
-    title: 'Empowering individuals and teams to think independently and shape their own path in Bitcoin strategy',
+    title: 'Researching Bitcoin strategy and the future of value',
     input: {
       placeholder: 'Enter your email',
     },
@@ -13,7 +13,7 @@ const config: Config = {
       tooltipContent: 'Get API Access (soon...)',
     },
     disclaimer:
-      'Our content is for informational purposes only and does not constitute financial advice. All signals are automated and should be seen as one perspective among many. Please do your own research—Bitcoin involves risk, and past trends do not guarantee future outcomes.',
+      'This content is for informational purposes only and does not constitute financial advice. Please do your own research—Bitcoin involves risk, and past trends do not guarantee future outcomes.',
   },
 }
 

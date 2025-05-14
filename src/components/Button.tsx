@@ -9,10 +9,11 @@ type Props = {
   onClick?: () => void
   children: React.ReactNode
   disabled?: boolean
-  tooltipId: string
-  tooltipContent: string
-  tooltipPlacement: 'top' | 'bottom'
+  tooltipId?: string
+  tooltipContent?: string
+  tooltipPlacement?: 'top' | 'bottom'
   loading?: boolean
+  className?: string
 }
 
 const Button: FC<Props> = ({
@@ -24,20 +25,22 @@ const Button: FC<Props> = ({
   tooltipContent,
   tooltipPlacement,
   loading,
+  className,
 }) => {
   const variantClasses: Record<Variant, string> = {
     primary: 'bg-blue text-white border-blue shadow-md',
-    secondary: 'text-black bg-white border-white',
+    secondary: 'text-black bg-white border-black',
   }
   return (
     <>
       <button
         className={classNames(
-          'p-3 border max-w-max rounded-full cursor-pointer flex items-center whitespace-nowrap justify-center',
+          'px-6 py-3 font-sans text-sm border max-w-max rounded-full cursor-pointer flex items-center whitespace-nowrap justify-center',
           variantClasses[variant],
-          !disabled && 'hover:brightness-90 transition duration-200',
+          !disabled && 'hover:brightness-95 transition duration-200',
           loading && '!cursor-progress opacity-70 brightness-110',
           disabled && '!cursor-not-allowed opacity-70 brightness-110',
+          className,
         )}
         onClick={onClick}
         disabled={disabled}
@@ -47,7 +50,7 @@ const Button: FC<Props> = ({
       >
         {children}
       </button>
-      <Tooltip id={tooltipId} className="!p-3 !rounded-full font-sans !text-xs" />
+      {tooltipId && <Tooltip id={tooltipId} className="!p-3 !rounded-full font-sans !text-xs" />}
     </>
   )
 }

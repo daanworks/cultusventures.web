@@ -37,12 +37,13 @@ export default function Home() {
         </div>
         <div className="pt-16 flex flex-col gap-4 text-grey-950">
           <p>
-            Exploring the Bitcoin landscape with clarity and strategic insight. Bitcoin presents a rare opportunity to
-            build meaningful wealth — but only through patience, timing, and independent thinking.
+            We use AI to analyze people’s sentiment and combine it with market data analysis to deliver clear insights
+            for Bitcoin investors. This dual approach helps uncover patterns in crowd behavior and market structure that
+            are often missed in surface-level analysis.
           </p>
           <p>
-            Providing research, tools, and insight to help others understand Bitcoin’s evolving role in the future of
-            money.
+            Access our data daily through a curated Telegram group and a public API, delivering real-time sentiment
+            scores and market insights to individual investors.
           </p>
           <div className="font-sans text-md pt-6 text-black">
             Curious to learn more? <a href="mailto:info@cultusventures.com">Let&#39;s talk.</a>

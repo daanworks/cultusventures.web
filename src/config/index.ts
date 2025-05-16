@@ -2,7 +2,7 @@ import { Config } from '@/types'
 
 const config: Config = {
   content: {
-    title: 'Researching Bitcoin strategy and the future of value',
+    title: 'Markets move on people. People move on sentiment. Sentiment lives in data.',
     input: {
       placeholder: 'Enter your email',
     },
@@ -13,7 +13,7 @@ const config: Config = {
       tooltipContent: 'Get API Access (soon...)',
     },
     disclaimer:
-      'This content is for informational purposes only and does not constitute financial advice. Please do your own research—Bitcoin involves risk, and past trends do not guarantee future outcomes.',
+      'This content and the data provided are for informational purposes only and should not be considered financial advice. Always conduct your own research—investing in Bitcoin involves risk, and past performance is not indicative of future results.',
   },
 }
 

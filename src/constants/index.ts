@@ -1,5 +1,2 @@
-export const HOLD = 'HOLD'
-export const SELL = 'SELL'
-export const DO_NOTHING = 'DO_NOTHING'
-export const DCA = 'DCA'
-export const BUY = 'BUY'
+export const BEARISH = 'BEARISH'
+export const BULLISH = 'BULLISH'

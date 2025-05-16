@@ -25,5 +25,5 @@ export const middleware = async (req: NextRequest) => {
 }
 
 export const config = {
-  matcher: '/api/analysis/:path*',
+  matcher: '/api/sentiment/:path*',
 }

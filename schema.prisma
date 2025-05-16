@@ -8,11 +8,13 @@ datasource db {
   directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
-model Analysis {
-  id        String       @id @default(cuid())
-  decision  DecisionType
-  btcPrice  BigInt
-  createdAt DateTime     @default(now()) @map(name: "created_at")
+model Sentiment {
+  id               String    @id @default(cuid())
+  btcPrice         BigInt
+  socialScore      Int
+  endOfCycleChance Float
+  trend            TrendType
+  createdAt        DateTime  @default(now()) @map(name: "created_at")
 }
 
 model ApiKey {
@@ -27,23 +29,20 @@ model ApiKey {
 }
 
 model User {
-  id         String   @id @default(cuid())
-  email      String   @unique
-  subscribed Boolean  @default(true)
-  createdAt  DateTime @default(now()) @map(name: "created_at")
-  apiKeys    ApiKey[]
+  id           String   @id @default(cuid())
+  email        String   @unique
+  telegramUser Boolean  @default(true)
+  createdAt    DateTime @default(now()) @map(name: "created_at")
+  apiKeys      ApiKey[]
 }
 
-model Decision {
-  id        String       @id @default(cuid())
-  decision  DecisionType
-  createdAt DateTime     @default(now()) @map(name: "created_at")
+model Trend {
+  id        String    @id @default(cuid())
+  type      TrendType
+  createdAt DateTime  @default(now()) @map(name: "created_at")
 }
 
-enum DecisionType {
-  BUY
-  SELL
-  HOLD
-  DO_NOTHING @map("DO NOTHING")
-  DCA
+enum TrendType {
+  BULLISH
+  BEARISH
 }

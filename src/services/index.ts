@@ -1,4 +1,4 @@
-import { Analysis, ApiKey, Decision, DecisionType, PrismaClient, User } from '@prisma/client'
+import { ApiKey, PrismaClient, Sentiment, TrendType, User } from '@prisma/client'
 import { GenerateContentResponse, GoogleGenAI } from '@google/genai'
 import { MailerooClient } from 'maileroo'
 import { BitcoinPrice, TelegramInviteLink } from '@/types'
@@ -8,25 +8,27 @@ const prisma = new PrismaClient()
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY })
 const maileroo: MailerooClient = MailerooClient.getClient(process.env.MAILEROO_API_KEY)
 
-export const AnalysisService = {
-  getLatest: async (): Promise<Analysis | null> => {
-    const response = await prisma.analysis.findFirst({
+export const SentimentService = {
+  getLatest: async (): Promise<Sentiment | null> => {
+    const response = await prisma.sentiment.findFirst({
       orderBy: { createdAt: 'desc' },
     })
     return response
   },
   deleteById: async (id: string): Promise<void> => {
-    await prisma.analysis.delete({
+    await prisma.sentiment.delete({
       where: {
         id,
       },
     })
   },
-  create: async (decision: DecisionType, btcPrice: number): Promise<void> => {
-    await prisma.analysis.create({
+  create: async (btcPrice: number, socialScore: number, endOfCycleChance: number, trend: TrendType): Promise<void> => {
+    await prisma.sentiment.create({
       data: {
-        decision,
         btcPrice,
+        socialScore,
+        endOfCycleChance,
+        trend,
       },
     })
   },
@@ -94,15 +96,6 @@ export const MailService = {
   },
 }
 
-export const DecisionService = {
-  getLatest: async (): Promise<Decision | null> => {
-    const response = await prisma.decision.findFirst({
-      orderBy: { createdAt: 'desc' },
-    })
-    return response
-  },
-}
-
 export const MarketService = {
   getBtcPrice: async (): Promise<BitcoinPrice | null> => {
     const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd')
@@ -117,13 +110,6 @@ export const UserService = {
   getByEmail: async (email: string): Promise<User | null> => {
     const response = await prisma.user.findFirst({ where: { email } })
     return response
-  },
-  upsert: async ({ email, subscribed }: { email: string; subscribed: boolean }): Promise<void> => {
-    await prisma.user.upsert({
-      where: { email },
-      update: { subscribed: true },
-      create: { email, subscribed },
-    })
   },
 }
 

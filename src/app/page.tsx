@@ -81,8 +81,8 @@ export default function Home() {
             are often missed in surface-level analysis.
           </p>
           <p>
-            Access our data daily through a curated Telegram group and a public API, delivering real-time sentiment
-            scores and market insights to individual investors.
+            Access our data daily through a curated <b>Telegram group</b> and an <b>API</b>, delivering real-time
+            sentiment scores and market cycle insights to investors.
           </p>
           <div className="font-sans text-md pt-6 text-black">
             Curious to learn more? <a href="mailto:info@cultusventures.com">Let&#39;s talk.</a>

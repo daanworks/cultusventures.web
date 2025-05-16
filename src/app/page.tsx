@@ -4,16 +4,35 @@ import Link from 'next/link'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { config as fontAwesomeConfig } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
-import { faEnvelope } from '@fortawesome/free-regular-svg-icons'
-import { faXTwitter } from '@fortawesome/free-brands-svg-icons'
+import { faTelegram, faXTwitter } from '@fortawesome/free-brands-svg-icons'
 import Button from '@/components/Button'
 import Container from '@/components/Container'
 import Logo from '@/components/Logo'
 import config from '@/config'
+import Form from '@/components/Form'
+import Input from '@/components/Input'
+import { faCircleNotch, faCode } from '@fortawesome/free-solid-svg-icons'
+import { useState } from 'react'
+import { validateEmail } from '@/utils'
 
 fontAwesomeConfig.autoAddCss = false
 
 export default function Home() {
+  const [email, setEmail] = useState<string>('')
+  const [loading, setLoading] = useState<boolean>(false)
+
+  const handleSubmit = async (email: string) => {
+    if (!validateEmail(email)) return alert('Please enter a valid email')
+    setLoading(true)
+    try {
+      console.log('Submitting ' + email)
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return (
     <Container className="flex flex-col justify-between">
       <div>
@@ -21,20 +40,36 @@ export default function Home() {
           <Logo />
         </div>
         <h1 className="pb-12">{config.content.title}</h1>
-        <div className="flex gap-3 flex-col sm:flex-row">
-          <Link href="https://x.com/cultusventures" target="_blank" rel="noopener noreferrer">
-            <Button className="gap-1">
-              Follow us on
-              <FontAwesomeIcon icon={faXTwitter} />
-            </Button>
-          </Link>
-          <a href="mailto:info@cultusventures.com" className="no-underline">
-            <Button className="gap-1" variant="secondary">
-              Send us a message
-              <FontAwesomeIcon icon={faEnvelope} />
-            </Button>
-          </a>
-        </div>
+        <Form
+          onSubmit={(event) => {
+            event.preventDefault()
+            handleSubmit(email)
+          }}
+        >
+          <Input
+            placeholder={config.content.input.placeholder}
+            type="email"
+            onChange={(e) => setEmail(e.currentTarget.value)}
+            disabled={loading}
+          />
+          <Button
+            tooltipId="telegram"
+            tooltipContent={config.content.telegramButton.tooltipContent}
+            tooltipPlacement="top"
+            loading={loading}
+          >
+            <FontAwesomeIcon icon={loading ? faCircleNotch : faTelegram} spin={loading} size="lg" />
+          </Button>
+          <Button
+            disabled={true}
+            variant="secondary"
+            tooltipId="api"
+            tooltipContent={config.content.apiButton.tooltipContent}
+            tooltipPlacement="top"
+          >
+            <FontAwesomeIcon icon={faCode} />
+          </Button>
+        </Form>
         <div className="pt-16 flex flex-col gap-4 text-grey-950">
           <p>
             We use AI to analyze people’s sentiment and combine it with market data analysis to deliver clear insights

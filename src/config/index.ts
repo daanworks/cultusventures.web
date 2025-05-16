@@ -6,8 +6,8 @@ const config: Config = {
     input: {
       placeholder: 'Enter your email',
     },
-    newsletterButton: {
-      tooltipContent: 'Unlock the Newsletter',
+    telegramButton: {
+      tooltipContent: 'Join the Community',
     },
     apiButton: {
       tooltipContent: 'Get API Access (soon...)',

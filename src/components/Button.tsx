@@ -29,13 +29,13 @@ const Button: FC<Props> = ({
 }) => {
   const variantClasses: Record<Variant, string> = {
     primary: 'bg-blue text-white border-blue shadow-md',
-    secondary: 'text-black bg-white border-black',
+    secondary: 'text-black bg-white',
   }
   return (
     <>
       <button
         className={classNames(
-          'px-6 py-3 font-sans text-sm border max-w-max rounded-full cursor-pointer flex items-center whitespace-nowrap justify-center',
+          'p-3 font-sans text-sm max-w-max rounded-full cursor-pointer flex items-center whitespace-nowrap justify-center',
           variantClasses[variant],
           !disabled && 'hover:brightness-95 transition duration-200',
           loading && '!cursor-progress opacity-70 brightness-110',

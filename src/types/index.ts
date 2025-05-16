@@ -27,7 +27,7 @@ export type Config = {
     input: {
       placeholder: string
     }
-    newsletterButton: {
+    telegramButton: {
       tooltipContent: string
     }
     apiButton: {

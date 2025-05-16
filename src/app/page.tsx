@@ -58,7 +58,9 @@ export default function Home() {
             tooltipPlacement="top"
             loading={loading}
           >
-            <FontAwesomeIcon icon={loading ? faCircleNotch : faTelegram} spin={loading} size="lg" />
+            <div className="w-[20px] h-[20px] flex items-center justify-center">
+              <FontAwesomeIcon icon={loading ? faCircleNotch : faTelegram} spin={loading} size="xl" />
+            </div>
           </Button>
           <Button
             disabled={true}
@@ -67,7 +69,9 @@ export default function Home() {
             tooltipContent={config.content.apiButton.tooltipContent}
             tooltipPlacement="top"
           >
-            <FontAwesomeIcon icon={faCode} />
+            <div className="w-[20px] h-[20px] flex items-center justify-center">
+              <FontAwesomeIcon icon={faCode} size="lg" />
+            </div>
           </Button>
         </Form>
         <div className="pt-16 flex flex-col gap-4 text-grey-950">

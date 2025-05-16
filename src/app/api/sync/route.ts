@@ -12,8 +12,8 @@ export const GET = async (req: NextRequest) => {
     const sentiment: Sentiment | null = await SentimentService.getLatest()
     const btcPriceData: BitcoinPrice | null = await MarketService.getBtcPrice()
     const btcPrice: number = btcPriceData?.bitcoin.usd || 0
-    const socialScore = sentiment?.socialScore || 0
-    const endOfCycleChance = sentiment?.endOfCycleChance || 0
+    const socialScore: number = sentiment?.socialScore || 0
+    const endOfCycleChance: number = sentiment?.endOfCycleChance || 0
     const message: string = socialScore + '\n' + endOfCycleChance + '\n' + 'BTC Price: ' + formatPrice(btcPrice)
     await TelegramService.sendMessage(message)
     return NextResponse.json({ success: true }, { status: 200 })

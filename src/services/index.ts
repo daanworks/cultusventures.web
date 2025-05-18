@@ -1,11 +1,8 @@
 import { ApiKey, PrismaClient, Sentiment, TrendType, User } from '@prisma/client'
-import { GenerateContentResponse, GoogleGenAI } from '@google/genai'
 import { MailerooClient } from 'maileroo'
 import { BitcoinPrice, TelegramInviteLink } from '@/types'
-import crypto from 'crypto'
 
 const prisma = new PrismaClient()
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY })
 const maileroo: MailerooClient = MailerooClient.getClient(process.env.MAILEROO_API_KEY)
 
 export const SentimentService = {
@@ -74,16 +71,6 @@ export const TelegramService = {
   },
 }
 
-export const AiService = {
-  generateContent: async (prompt: string): Promise<string> => {
-    const generatedContent: GenerateContentResponse = await ai.models.generateContent({
-      model: 'gemini-2.0-flash',
-      contents: prompt,
-    })
-    return generatedContent.text || ''
-  },
-}
-
 export const MailService = {
   sendMail: async (to: string): Promise<void> => {
     const html = `<div style="font-family:Arial,sans-serif;max-width:600px;margin:auto;padding:20px;background:#FCFCFC;border:1px solid #D3D3D3;border-radius:8px;"><div style="margin-bottom:20px;"><img src="https://www.cultusventures.com/logo.png" alt="Cultus Ventures Logo" style="height:60px;margin-bottom:30px;" /><h2 style="color:#000011;margin:0;">Welcome to the Cultus Ventures Newsletter!</h2></div><p style="font-size:16px;color:#4F4F4F;">You’re officially on the list. From now on, you’ll receive:</p><ul style="font-size:16px;color:#4F4F4F;line-height:1.6;"><li>Insights on Bitcoin investing</li><li>Exclusive updates on our latest positions</li><li>Educational content to empower your financial journey</li></ul><p style="font-size:16px;color:#4F4F4F;">We’re excited to have you with us. <a href="https://x.com/cultusventures" style="color:#003096;text-decoration:underline;">Follow us on X</a> to stay even more connected.</p><hr style="margin:20px 0;border-color:#D3D3D3;"><p style="font-size:12px;color:#878787;">If you didn’t subscribe to this newsletter, feel free to ignore this email or contact us at <a href="mailto:info@cultusventures.com" style="color:#003096;text-decoration:underline;">info@cultusventures.com</a>.</p></div>`
@@ -110,23 +97,5 @@ export const UserService = {
   getByEmail: async (email: string): Promise<User | null> => {
     const response = await prisma.user.findFirst({ where: { email } })
     return response
-  },
-}
-
-export const SubscriptionService = {
-  upsert: async (email: string): Promise<void> => {
-    const emailHash = crypto.createHash('md5').update(email.toLowerCase()).digest('hex')
-    const url = `https://${process.env.MAILCHIMP_DATACENTER}.api.mailchimp.com/3.0/lists/${process.env.MAILCHIMP_AUDIENCE_ID}/members/${emailHash}`
-    await fetch(url, {
-      method: 'PUT',
-      headers: {
-        Authorization: `Basic ${Buffer.from(`anystring:${process.env.MAILCHIMP_API_KEY}`).toString('base64')}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email_address: email,
-        status_if_new: 'subscribed',
-      }),
-    })
   },
 }

@@ -35,4 +35,9 @@ export type Config = {
     }
     disclaimer: string
   }
+  webSearch: {
+    instructions: string
+    input: string
+  }
+  analysisPrompt: (webSearch: string) => string
 }

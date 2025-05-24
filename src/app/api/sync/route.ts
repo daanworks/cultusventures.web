@@ -1,20 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { MarketService, SentimentService, TelegramService } from '@/services'
+import { MarketService, OpenAIService, TelegramService } from '@/services'
+import config from '@/config'
 import { BitcoinPrice } from '@/types'
 import { formatPrice } from '@/utils'
-import { Sentiment } from '@prisma/client'
 
 export const GET = async (req: NextRequest) => {
   const auth: string = req.headers.get('authorization') || ''
   if (auth !== `Bearer ${process.env.CRON_SECRET}`) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   try {
-    const sentiment: Sentiment | null = await SentimentService.getLatest()
+    const webSearch: string =
+      (await OpenAIService.webSearch(config.webSearch.instructions, config.webSearch.input)) || ''
+    const sentiment: string = (await OpenAIService.analyze(config.analysisPrompt(webSearch))) || ''
     const btcPriceData: BitcoinPrice | null = await MarketService.getBtcPrice()
     const btcPrice: number = btcPriceData?.bitcoin.usd || 0
-    const socialScore: number = sentiment?.socialScore || 0
-    const endOfCycleChance: number = sentiment?.endOfCycleChance || 0
-    const message: string = socialScore + '\n' + endOfCycleChance + '\n' + 'BTC Price: ' + formatPrice(btcPrice)
+    const message: string = `${sentiment}\nBTC Price: ${formatPrice(btcPrice)}`
     await TelegramService.sendMessage(message)
     return NextResponse.json({ success: true }, { status: 200 })
   } catch (error) {

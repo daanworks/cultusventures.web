@@ -1,6 +1,6 @@
 import { ApiKey, PrismaClient, Sentiment, TrendType, User } from '@prisma/client'
 import { MailerooClient } from 'maileroo'
-import { BitcoinPrice, TelegramInviteLink } from '@/types'
+import { TelegramInviteLink } from '@/types'
 import OpenAI from 'openai'
 
 const prisma = new PrismaClient()
@@ -104,9 +104,10 @@ export const MailService = {
 }
 
 export const MarketService = {
-  getBtcPrice: async (): Promise<BitcoinPrice | null> => {
+  getBtcPrice: async (): Promise<number | null> => {
     const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd')
-    return await response.json()
+    const data = await response.json()
+    return data?.bitcoin?.usd || null
   },
 }
 

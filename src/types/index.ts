@@ -1,9 +1,3 @@
-export type BitcoinPrice = {
-  bitcoin: {
-    [currency: string]: number
-  }
-}
-
 export type TelegramInviteLink = {
   ok: boolean
   result: {

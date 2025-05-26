@@ -3,6 +3,8 @@ import { MarketService, OpenAIService, TelegramService } from '@/services'
 import config from '@/config'
 import { formatPrice } from '@/utils'
 
+export const maxDuration = 60
+
 export const GET = async (req: NextRequest) => {
   const auth: string = req.headers.get('authorization') || ''
   if (auth !== `Bearer ${process.env.CRON_SECRET}`) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })

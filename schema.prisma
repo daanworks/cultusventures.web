@@ -11,7 +11,8 @@ datasource db {
 model Sentiment {
   id               String    @id @default(cuid())
   btcPrice         BigInt
-  socialScore      Int
+  score            Float
+  explanation      String
   endOfCycleChance Float
   trend            TrendType
   createdAt        DateTime  @default(now()) @map(name: "created_at")

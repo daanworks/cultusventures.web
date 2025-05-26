@@ -16,12 +16,13 @@ export const OpenAIService = {
     })
     return response.output_text
   },
-  analyze: async (prompt: string): Promise<string | null> => {
+  analyze: async (prompt: string): Promise<{ score: number; explanation: string }> => {
     const response = await openai.chat.completions.create({
       model: 'gpt-4-0125-preview',
       messages: [{ role: 'user', content: prompt }],
+      response_format: { type: 'json_object' },
     })
-    return response.choices[0].message.content
+    return JSON.parse(response.choices[0].message.content || '')
   },
 }
 
@@ -39,11 +40,18 @@ export const SentimentService = {
       },
     })
   },
-  create: async (btcPrice: number, socialScore: number, endOfCycleChance: number, trend: TrendType): Promise<void> => {
+  create: async (
+    btcPrice: number,
+    score: number,
+    explanation: string,
+    endOfCycleChance: number,
+    trend: TrendType,
+  ): Promise<void> => {
     await prisma.sentiment.create({
       data: {
         btcPrice,
-        socialScore,
+        score,
+        explanation,
         endOfCycleChance,
         trend,
       },
@@ -118,5 +126,14 @@ export const UserService = {
   getByEmail: async (email: string): Promise<User | null> => {
     const response = await prisma.user.findFirst({ where: { email } })
     return response
+  },
+}
+
+export const TrendService = {
+  getLatest: async (): Promise<TrendType | null> => {
+    const response = await prisma.trend.findFirst({
+      orderBy: { createdAt: 'desc' },
+    })
+    return response?.type || null
   },
 }

@@ -27,7 +27,7 @@ const config: Config = {
     webSearch: string,
   ) => `You are a professional Bitcoin market‑sentiment analyst. You receive social & news data and must produce a "sentiment score", a float between ‑5 (panic) and 5 (euphoria)
     Here is today's web data:\n${webSearch}
-    Requirement: Only return the score and a short explanation of the score in the following format: 'Score: {score}. Sentiment explanation: {explanation}'.
+    Requirement: Only return the score and a short explanation of the score in the following JSON format: "{ score, explanation }".
     `,
 }
 

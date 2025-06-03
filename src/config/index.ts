@@ -2,7 +2,7 @@ import { Config } from '@/types'
 
 const config: Config = {
   content: {
-    title: 'Markets move on people. People move on sentiment. Sentiment lives in data.',
+    title: 'Independent research on the psychology behind people and markets',
     input: {
       placeholder: 'Enter your email',
     },
@@ -13,7 +13,7 @@ const config: Config = {
       tooltipContent: 'Get API Access (soon...)',
     },
     disclaimer:
-      'This content and the data provided are for informational purposes only and should not be considered financial advice. Always conduct your own research—investing in Bitcoin involves risk, and past performance is not indicative of future results.',
+      'This content and is for informational purposes only and should not be considered financial advice. Always conduct your own research — investing and trading involves risk, and past performance is not indicative of future results.',
   },
   webSearch: {
     instructions: `You are an on‑chain research assistant. Using the web_search tool, gather the most relevant public‑web information that reflects TODAY’S (${new Date().toISOString().slice(0, 10)}) sentiment around Bitcoin (last 24h window).`,

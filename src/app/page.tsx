@@ -76,13 +76,14 @@ export default function Home() {
         </Form>
         <div className="pt-16 flex flex-col gap-4 text-grey-950">
           <p>
-            We use AI to analyze people’s sentiment and combine it with market data analysis to deliver clear insights
-            for Bitcoin investors. This dual approach helps uncover patterns in crowd behavior and market structure that
-            are often missed in surface-level analysis.
+            Researching the <i>psychology</i> behind financial decisions — how people think, feel, and behave when risk
+            and money are involved. We explore emotional cycles, mental biases, crowd behavior, and the mindset required
+            to survive long-term in uncertain markets.
           </p>
           <p>
-            Access our data daily through a curated <b>Telegram group</b> and an <b>API</b>, delivering real-time
-            sentiment scores and market cycle insights to investors.
+            Our studies blend trading psychology, investor sentiment, and financial philosophy to uncover the deeper
+            patterns behind market movements. We aim to go beyond signals and noise — offering independent,
+            strategy-driven insights for those who want to understand the game, not just play it.
           </p>
           <div className="font-sans text-md pt-6 text-black">
             Curious to learn more? <a href="mailto:info@cultusventures.com">Let&#39;s talk.</a>

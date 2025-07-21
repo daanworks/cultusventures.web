@@ -76,14 +76,14 @@ export default function Home() {
         </Form>
         <div className="pt-16 flex flex-col gap-4 text-grey-950">
           <p>
-            Researching the <i>psychology</i> behind financial decisions — how people think, feel, and behave when risk
-            and money are involved. We explore emotional cycles, mental biases, crowd behavior, and the mindset required
-            to survive long-term in uncertain markets.
+            We are dedicated to delivering clear, independent insights into Bitcoin’s market dynamics. Through
+            research-driven content and transparent portfolio updates, we aim to cut through noise and provide strategic
+            guidance for navigating market cycles.
           </p>
           <p>
-            Our studies blend trading psychology, investor sentiment, and financial philosophy to uncover the deeper
-            patterns behind market movements. We aim to go beyond signals and noise — offering independent,
-            strategy-driven insights for those who want to understand the game, not just play it.
+            Our mission is rooted in disciplined observation and continuous learning. By tracking macro trends, on-chain
+            signals, and sentiment shifts, we seek to better understand Bitcoin&apos;s long-term trajectory—and share
+            those insights in real time.
           </p>
           <div className="font-sans text-md pt-6 text-black">
             Curious to learn more? <a href="mailto:info@cultusventures.com">Let&#39;s talk.</a>

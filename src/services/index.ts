@@ -1,42 +1,8 @@
-import { ApiKey, PrismaClient, Sentiment, TrendType, User } from '@prisma/client'
+import { ApiKey, PrismaClient, User } from '@prisma/client'
 import { MailerooClient } from 'maileroo'
-import { TelegramInviteLink } from '@/types'
 
 const prisma = new PrismaClient()
 const maileroo: MailerooClient = MailerooClient.getClient(process.env.MAILEROO_API_KEY)
-
-export const SentimentService = {
-  getLatest: async (): Promise<Sentiment | null> => {
-    const response = await prisma.sentiment.findFirst({
-      orderBy: { createdAt: 'desc' },
-    })
-    return response
-  },
-  deleteById: async (id: string): Promise<void> => {
-    await prisma.sentiment.delete({
-      where: {
-        id,
-      },
-    })
-  },
-  create: async (
-    btcPrice: number,
-    score: number,
-    explanation: string,
-    endOfCycleChance: number,
-    trend: TrendType,
-  ): Promise<void> => {
-    await prisma.sentiment.create({
-      data: {
-        btcPrice,
-        score,
-        explanation,
-        endOfCycleChance,
-        trend,
-      },
-    })
-  },
-}
 
 export const ApiKeyService = {
   getAll: async (): Promise<ApiKey[] | null> => {
@@ -45,36 +11,6 @@ export const ApiKeyService = {
   },
   create: async (apiKey: string, userId: string): Promise<void> => {
     await prisma.apiKey.create({ data: { userId, apiKey } })
-  },
-}
-
-export const TelegramService = {
-  sendMessage: async (text: string): Promise<void> => {
-    const url = `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`
-    await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        chat_id: process.env.TELEGRAM_CHAT_ID,
-        text,
-        parse_mode: 'Markdown',
-      }),
-    })
-  },
-  createInviteLink: async (): Promise<string> => {
-    const url = `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/createChatInviteLink`
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        chat_id: process.env.TELEGRAM_CHAT_ID,
-        member_limit: 1,
-      }),
-    })
-    const data: TelegramInviteLink = await response.json()
-    return data.result.invite_link || ''
   },
 }
 
@@ -90,14 +26,6 @@ export const MailService = {
   },
 }
 
-export const MarketService = {
-  getBtcPrice: async (): Promise<number | null> => {
-    const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd')
-    const data = await response.json()
-    return data?.bitcoin?.usd || null
-  },
-}
-
 export const UserService = {
   create: async (email: string): Promise<void> => {
     await prisma.user.create({ data: { email } })
@@ -105,14 +33,5 @@ export const UserService = {
   getByEmail: async (email: string): Promise<User | null> => {
     const response = await prisma.user.findFirst({ where: { email } })
     return response
-  },
-}
-
-export const TrendService = {
-  getLatest: async (): Promise<TrendType | null> => {
-    const response = await prisma.trend.findFirst({
-      orderBy: { createdAt: 'desc' },
-    })
-    return response?.type || null
   },
 }

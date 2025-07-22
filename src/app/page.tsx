@@ -54,9 +54,12 @@ export default function Home() {
           />
           <Button
             tooltipId="mail"
-            tooltipContent={config.content.mailButton.tooltipContent}
+            tooltipContent={
+              config.content.mailButton.tooltipContent + (process.env.NODE_ENV === 'production' ? ' (soon...)' : '')
+            }
             tooltipPlacement="top"
             loading={loading}
+            disabled={process.env.NODE_ENV === 'production'}
           >
             <div className="w-[20px] h-[20px] flex items-center justify-center">
               <FontAwesomeIcon icon={loading ? faCircleNotch : faEnvelope} spin={loading} size="xl" />

@@ -8,16 +8,6 @@ datasource db {
   directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
-model Sentiment {
-  id               String    @id @default(cuid())
-  btcPrice         BigInt
-  score            Float
-  explanation      String
-  endOfCycleChance Float
-  trend            TrendType
-  createdAt        DateTime  @default(now()) @map(name: "created_at")
-}
-
 model ApiKey {
   id        String   @id @default(cuid())
   apiKey    String
@@ -30,16 +20,15 @@ model ApiKey {
 }
 
 model User {
-  id           String   @id @default(cuid())
-  email        String   @unique
-  telegramUser Boolean  @default(true)
-  createdAt    DateTime @default(now()) @map(name: "created_at")
-  apiKeys      ApiKey[]
+  id        String   @id @default(cuid())
+  email     String   @unique
+  createdAt DateTime @default(now()) @map(name: "created_at")
+  apiKeys   ApiKey[]
 }
 
-model Trend {
+model Analysis {
   id        String    @id @default(cuid())
-  type      TrendType
+  trend     TrendType
   createdAt DateTime  @default(now()) @map(name: "created_at")
 }
 

@@ -1,30 +1,9 @@
 import { ApiKey, PrismaClient, Sentiment, TrendType, User } from '@prisma/client'
 import { MailerooClient } from 'maileroo'
 import { TelegramInviteLink } from '@/types'
-import OpenAI from 'openai'
 
 const prisma = new PrismaClient()
 const maileroo: MailerooClient = MailerooClient.getClient(process.env.MAILEROO_API_KEY)
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
-
-export const OpenAIService = {
-  webSearch: async (instructions: string, input: string): Promise<string | null> => {
-    const response = await openai.responses.create({
-      model: 'gpt-4o',
-      instructions,
-      input,
-    })
-    return response.output_text
-  },
-  analyze: async (prompt: string): Promise<{ score: number; explanation: string }> => {
-    const response = await openai.chat.completions.create({
-      model: 'gpt-4-0125-preview',
-      messages: [{ role: 'user', content: prompt }],
-      response_format: { type: 'json_object' },
-    })
-    return JSON.parse(response.choices[0].message.content || '')
-  },
-}
 
 export const SentimentService = {
   getLatest: async (): Promise<Sentiment | null> => {

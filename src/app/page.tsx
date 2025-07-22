@@ -4,14 +4,14 @@ import Link from 'next/link'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { config as fontAwesomeConfig } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
-import { faTelegram, faXTwitter } from '@fortawesome/free-brands-svg-icons'
+import { faXTwitter } from '@fortawesome/free-brands-svg-icons'
 import Button from '@/components/Button'
 import Container from '@/components/Container'
 import Logo from '@/components/Logo'
 import config from '@/config'
 import Form from '@/components/Form'
 import Input from '@/components/Input'
-import { faCircleNotch, faCode } from '@fortawesome/free-solid-svg-icons'
+import { faCircleNotch, faCode, faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
 import { validateEmail } from '@/utils'
 
@@ -53,13 +53,13 @@ export default function Home() {
             disabled={loading}
           />
           <Button
-            tooltipId="telegram"
-            tooltipContent={config.content.telegramButton.tooltipContent}
+            tooltipId="mail"
+            tooltipContent={config.content.mailButton.tooltipContent}
             tooltipPlacement="top"
             loading={loading}
           >
             <div className="w-[20px] h-[20px] flex items-center justify-center">
-              <FontAwesomeIcon icon={loading ? faCircleNotch : faTelegram} spin={loading} size="xl" />
+              <FontAwesomeIcon icon={loading ? faCircleNotch : faEnvelope} spin={loading} size="xl" />
             </div>
           </Button>
           <Button

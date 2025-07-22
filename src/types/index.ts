@@ -21,7 +21,7 @@ export type Config = {
     input: {
       placeholder: string
     }
-    telegramButton: {
+    mailButton: {
       tooltipContent: string
     }
     apiButton: {
@@ -29,9 +29,4 @@ export type Config = {
     }
     disclaimer: string
   }
-  webSearch: {
-    instructions: string
-    input: string
-  }
-  analysisPrompt: (webSearch: string) => string
 }

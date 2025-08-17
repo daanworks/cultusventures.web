@@ -22,7 +22,7 @@ model ApiKey {
 model User {
   id         String   @id @default(cuid())
   email      String   @unique
-  subscribed Boolean  @default(true)
+  subscribed Boolean  @default(false)
   createdAt  DateTime @default(now()) @map(name: "created_at")
   apiKeys    ApiKey[]
 }

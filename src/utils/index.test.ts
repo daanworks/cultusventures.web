@@ -1,4 +1,4 @@
-import { generateApiKey, validateEmail } from '@/utils/index'
+import { generateApiKey, validateEmail, createHash } from '@/utils/index'
 
 describe('validateEmail', () => {
   it('returns false for empty email', () => {
@@ -27,5 +27,21 @@ describe('generateApiKey', () => {
     const key1 = generateApiKey()
     const key2 = generateApiKey()
     expect(key1).not.toEqual(key2)
+  })
+})
+
+describe('createHash', () => {
+  it('should be case insensitive', () => {
+    const lower = createHash('test@example.com')
+    const upper = createHash('TEST@EXAMPLE.COM')
+    expect(lower).toBe(upper)
+  })
+  it('should produce consistent results for the same email', () => {
+    const email = 'test@example.com'
+    expect(createHash(email)).toBe(createHash(email))
+  })
+  it('should return a 32-character hexadecimal string', () => {
+    const hash = createHash('test@example.com')
+    expect(hash).toMatch(/^[a-f0-9]{32}$/)
   })
 })

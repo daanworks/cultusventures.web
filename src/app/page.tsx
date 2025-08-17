@@ -25,7 +25,12 @@ export default function Home() {
     if (!validateEmail(email)) return alert('Please enter a valid email')
     setLoading(true)
     try {
-      console.log('Submitting ' + email)
+      const response = await fetch('/api/subscribe', {
+        method: 'POST',
+        body: JSON.stringify({ email }),
+      })
+      const data = await response.json()
+      if (data.url) return (window.location.href = data.url)
     } catch (error) {
       console.log(error)
     } finally {
@@ -79,14 +84,12 @@ export default function Home() {
         </Form>
         <div className="pt-16 flex flex-col gap-4 text-grey-950">
           <p>
-            We are dedicated to delivering clear, independent insights into Bitcoin’s market dynamics. Through
-            research-driven content and transparent portfolio updates, we aim to cut through noise and provide strategic
-            guidance for navigating market cycles.
+            We provide independent, research-based commentary on Bitcoin market conditions. Our focus is on clarity,
+            consistency, and thoughtful context to support informed decision-making.
           </p>
           <p>
-            Our mission is rooted in disciplined observation and continuous learning. By tracking macro trends, on-chain
-            signals, and sentiment shifts, we seek to better understand Bitcoin&apos;s long-term trajectory—and share
-            those insights in real time.
+            By closely observing macro trends, institutional activity, and market sentiment, we aim to distill the
+            current state of the market into concise updates—delivered with discipline and objectivity.
           </p>
           <div className="font-sans text-md pt-6 text-black">
             Curious to learn more? <a href="mailto:info@cultusventures.com">Let&#39;s talk.</a>

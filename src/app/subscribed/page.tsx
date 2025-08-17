@@ -1,9 +1,9 @@
 import Link from 'next/link'
 
-const NotFound = () => {
+const Subscribed = () => {
   return (
     <div className="flex flex-col justify-center items-center w-full min-h-screen">
-      <div className="text-5xl">404 - Not found</div>
+      <div className="text-5xl">You already have a subscription!</div>
       <Link href="/" className="pb-8">
         Return to homepage
       </Link>
@@ -15,4 +15,4 @@ const NotFound = () => {
   )
 }
 
-export default NotFound
+export default Subscribed

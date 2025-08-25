@@ -85,7 +85,7 @@ export default function Home() {
         <div className="pt-16 flex flex-col gap-4 text-grey-950">
           <p>
             We provide independent, research-based commentary on Bitcoin market conditions. Our focus is on clarity,
-            consistency, and thoughtful context to support informed decision-making.
+            consistency, and thoughtful context.
           </p>
           <p>
             By closely observing macro trends, institutional activity, and market sentiment, we aim to distill the

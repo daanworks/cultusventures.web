@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
-  title: 'Cultus Ventures | Bitcoin Strategy Platform',
-  description: 'Bitcoin Strategy Platform',
+  title: 'Cultus Ventures | Bitcoin Market Commentary',
+  description: 'Bitcoin Market Commentary',
 }
 
 export default function RootLayout({

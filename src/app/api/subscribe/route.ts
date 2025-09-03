@@ -6,7 +6,7 @@ import Stripe from 'stripe'
 
 export const POST = async (req: NextRequest) => {
   const { email }: { email: string } = await req.json()
-  if (!validateEmail(email)) return NextResponse.json({ error: 'Invalid email address' }, { status: 400 })
+  if (!(await validateEmail(email))) return NextResponse.json({ error: 'Invalid email address' }, { status: 400 })
   const user: User | null = await UserService.getByEmail(email)
   if (user?.subscribed) return NextResponse.json({ url: '/subscribed' }, { status: 303 })
   try {

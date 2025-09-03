@@ -16,6 +16,7 @@ export const GET = async (req: NextRequest) => {
       return NextResponse.json({ error: 'Invalid credentials' }, { status: 403 })
     }
   } catch (error) {
+    console.error('Error getting api key', (error as Error).message)
     return NextResponse.json({ error: (error as Error).message }, { status: 500 })
   }
 }

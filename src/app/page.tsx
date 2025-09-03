@@ -22,7 +22,7 @@ export default function Home() {
   const [loading, setLoading] = useState<boolean>(false)
 
   const handleSubmit = async (email: string) => {
-    if (!validateEmail(email)) return alert('Please enter a valid email')
+    if (!(await validateEmail(email))) return alert('Please enter a valid email')
     setLoading(true)
     try {
       const response = await fetch('/api/subscribe', {

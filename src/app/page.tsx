@@ -84,12 +84,15 @@ export default function Home() {
         </Form>
         <div className="pt-16 flex flex-col gap-4 text-grey-950">
           <p>
-            We provide independent, research-based commentary on Bitcoin market conditions. Our focus is on clarity,
-            consistency, and thoughtful context.
+            We study market structure, macroeconomic cycles, and on-chain data to identify high-probability
+            opportunities in Bitcoin’s evolving landscape. Our approach is built on patience, conviction, and the belief
+            that disciplined strategy outperforms noise and speculation.
           </p>
           <p>
-            By closely observing macro trends, institutional activity, and market sentiment, we aim to distill the
-            current state of the market into concise updates—delivered with discipline and objectivity.
+            Each week, we publish a comprehensive <b>Investment Strategy Report</b> detailing our capital allocation
+            framework, market outlook, and strategic adjustments. The report reflects a structured investment process
+            grounded in data-driven analysis, risk management, and a long-term orientation toward capital growth within
+            the Bitcoin ecosystem.
           </p>
           <div className="font-sans text-md pt-6 text-black">
             Curious to learn more? <a href="mailto:info@cultusventures.com">Let&#39;s talk.</a>

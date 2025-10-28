@@ -7,7 +7,7 @@ const config: Config = {
       placeholder: 'Enter your email',
     },
     mailButton: {
-      tooltipContent: 'Access our latest market commentary',
+      tooltipContent: 'Access our latest Report',
     },
     apiButton: {
       tooltipContent: 'Get API Access (soon...)',

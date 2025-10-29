@@ -30,3 +30,8 @@ export type Config = {
     disclaimer: string
   }
 }
+
+export type DateFilters = {
+  from: Date | null
+  to: Date | null
+}

@@ -1,8 +1,9 @@
-import { ApiKey, PrismaClient, User } from '@prisma/client'
+import { Analysis, ApiKey, PrismaClient, User } from '@prisma/client'
 import { MailerooClient } from 'maileroo'
 import mailchimp from '@mailchimp/mailchimp_marketing'
 import { createHash } from '@/utils'
 import Stripe from 'stripe'
+import { DateFilters } from '@/types'
 
 const prisma = new PrismaClient()
 const maileroo: MailerooClient = MailerooClient.getClient(process.env.MAILEROO_API_KEY)
@@ -57,6 +58,18 @@ export const UserService = {
   },
   unsubscribe: async (email: string): Promise<User> => {
     return await prisma.user.update({ where: { email }, data: { subscribed: false } })
+  },
+}
+
+export const AnalysisService = {
+  getAll: async (filters: { from: Date | null; to: Date | null }): Promise<Analysis[]> => {
+    const { from, to }: DateFilters = filters
+    return await prisma.analysis.findMany({
+      where: { createdAt: { ...(from && { gte: from }), ...(to && { lte: to }) } },
+    })
+  },
+  getById: async (id: string): Promise<Analysis | null> => {
+    return await prisma.analysis.findUnique({ where: { id } })
   },
 }
 

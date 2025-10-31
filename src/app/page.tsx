@@ -89,10 +89,9 @@ export default function Home() {
             that disciplined strategy outperforms noise and speculation.
           </p>
           <p>
-            Each week, we publish a comprehensive <b>Investment Strategy Report</b> detailing our capital allocation
-            framework, market outlook, and strategic adjustments. The report reflects a structured investment process
-            grounded in data-driven analysis, risk management, and a long-term orientation toward capital growth within
-            the Bitcoin ecosystem.
+            We deliver real-time insights derived from a proprietary research framework through a <b>REST API</b>,
+            empowering developers, analysts, and investors to integrate Bitcoin intelligence directly into their own
+            tools and workflows.
           </p>
           <div className="font-sans text-md pt-6 text-black">
             Curious to learn more? <a href="mailto:info@cultusventures.com">Let&#39;s talk.</a>

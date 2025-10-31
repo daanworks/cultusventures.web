@@ -1,7 +1,5 @@
 import { Analysis, ApiKey, PrismaClient, User } from '@prisma/client'
 import { MailerooClient } from 'maileroo'
-import mailchimp from '@mailchimp/mailchimp_marketing'
-import { createHash } from '@/utils'
 import Stripe from 'stripe'
 import { DateFilters } from '@/types'
 
@@ -9,11 +7,6 @@ const prisma = new PrismaClient()
 const maileroo: MailerooClient = MailerooClient.getClient(process.env.MAILEROO_API_KEY)
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2025-03-31.basil',
-})
-
-mailchimp.setConfig({
-  apiKey: process.env.MAILCHIMP_API_KEY!,
-  server: process.env.MAILCHIMP_SERVER_PREFIX!,
 })
 
 export const ApiKeyService = {
@@ -56,9 +49,6 @@ export const UserService = {
   getAll: async (where: { subscribed: boolean }): Promise<User[]> => {
     return await prisma.user.findMany({ where })
   },
-  unsubscribe: async (email: string): Promise<User> => {
-    return await prisma.user.update({ where: { email }, data: { subscribed: false } })
-  },
 }
 
 export const AnalysisService = {
@@ -70,29 +60,6 @@ export const AnalysisService = {
   },
   getById: async (id: string): Promise<Analysis | null> => {
     return await prisma.analysis.findUnique({ where: { id } })
-  },
-}
-
-export const MailchimpService = {
-  unsubscribe: async (email: string): Promise<void> => {
-    const subscriberHash: string = createHash(email)
-    try {
-      await mailchimp.lists.updateListMember(process.env.MAILCHIMP_LIST_ID!, subscriberHash, { status: 'unsubscribed' })
-    } catch (error) {
-      console.error(`Mailchimp unsubscribe error for ${email}:`, (error as Error).message)
-    }
-  },
-  setListMember: async (email: string): Promise<void> => {
-    const subscriberHash: string = createHash(email)
-    try {
-      await mailchimp.lists.setListMember(process.env.MAILCHIMP_LIST_ID!, subscriberHash, {
-        email_address: email,
-        status_if_new: 'subscribed',
-        status: 'subscribed',
-      })
-    } catch (error) {
-      console.error('Mailchimp upsert error:', error as Error)
-    }
   },
 }
 

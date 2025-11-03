@@ -94,7 +94,7 @@ export default function Home() {
             tools and workflows.
           </p>
           <div className="font-sans text-md pt-6 text-black">
-            Curious to learn more? <a href="mailto:info@cultusventures.com">Let&#39;s talk.</a>
+            Curious to learn more? <a href="/docs">Read the docs</a>
           </div>
         </div>
       </div>

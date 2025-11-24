@@ -11,7 +11,7 @@ import Logo from '@/components/Logo'
 import config from '@/config'
 import Form from '@/components/Form'
 import Input from '@/components/Input'
-import { faCircleNotch, faCode } from '@fortawesome/free-solid-svg-icons'
+import { faCircleNotch, faCode, faEnvelope } from '@fortawesome/free-solid-svg-icons'
 import { useState } from 'react'
 import { validateEmail } from '@/utils'
 
@@ -57,28 +57,28 @@ export default function Home() {
             onChange={(e) => setEmail(e.currentTarget.value)}
             disabled={loading}
           />
-          {/*<Button*/}
-          {/*  tooltipId="mail"*/}
-          {/*  tooltipContent={*/}
-          {/*    config.content.mailButton.tooltipContent + (process.env.NODE_ENV === 'production' ? ' (soon...)' : '')*/}
-          {/*  }*/}
-          {/*  tooltipPlacement="top"*/}
-          {/*  loading={loading}*/}
-          {/*  disabled={process.env.NODE_ENV === 'production'}*/}
-          {/*>*/}
-          {/*  <div className="w-[20px] h-[20px] flex items-center justify-center">*/}
-          {/*    <FontAwesomeIcon icon={loading ? faCircleNotch : faEnvelope} spin={loading} size="xl" />*/}
-          {/*  </div>*/}
-          {/*</Button>*/}
           <Button
+            tooltipId="mail"
+            tooltipContent={
+              config.content.mailButton.tooltipContent + (process.env.NODE_ENV === 'production' ? ' (soon...)' : '')
+            }
+            tooltipPlacement="top"
+            loading={loading}
             disabled={process.env.NODE_ENV === 'production'}
-            variant="primary"
+          >
+            <div className="w-[20px] h-[20px] flex items-center justify-center">
+              <FontAwesomeIcon icon={loading ? faCircleNotch : faEnvelope} spin={loading} size="xl" />
+            </div>
+          </Button>
+          <Button
+            disabled={true}
+            variant="secondary"
             tooltipId="api"
             tooltipContent={config.content.apiButton.tooltipContent}
             tooltipPlacement="top"
           >
             <div className="w-[20px] h-[20px] flex items-center justify-center">
-              <FontAwesomeIcon icon={loading ? faCircleNotch : faCode} spin={loading} size="lg" />
+              <FontAwesomeIcon icon={faCode} size="lg" />
             </div>
           </Button>
         </Form>
@@ -89,12 +89,13 @@ export default function Home() {
             that disciplined strategy outperforms noise and speculation.
           </p>
           <p>
-            We deliver real-time insights derived from a proprietary research framework through a <b>REST API</b>,
-            empowering developers, analysts, and investors to integrate Bitcoin intelligence directly into their own
-            tools and workflows.
+            Each week, we publish a comprehensive <b>Investment Strategy Report</b> detailing our capital allocation
+            framework, market outlook, and strategic adjustments. The report reflects a structured investment process
+            grounded in data-driven analysis, risk management, and a long-term orientation toward capital growth within
+            the Bitcoin ecosystem.
           </p>
           <div className="font-sans text-md pt-6 text-black">
-            Curious to learn more? <a href="/docs">Read the docs</a>
+            Curious to learn more? <a href="mailto:info@cultusventures.com">Let&#39;s talk.</a>
           </div>
         </div>
       </div>

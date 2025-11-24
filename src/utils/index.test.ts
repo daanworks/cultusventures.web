@@ -1,4 +1,4 @@
-import { generateApiKey, validateEmail, parseDate } from '@/utils/index'
+import { generateApiKey, validateEmail, createHash } from '@/utils/index'
 
 describe('validateEmail', () => {
   it('returns false for empty email', async () => {
@@ -31,28 +31,18 @@ describe('generateApiKey', () => {
   })
 })
 
-describe('parseDate', () => {
-  it('returns null when value is null', () => {
-    expect(parseDate(null)).toBeNull()
+describe('createHash', () => {
+  it('should be case insensitive', () => {
+    const lower = createHash('test@example.com')
+    const upper = createHash('TEST@EXAMPLE.COM')
+    expect(lower).toBe(upper)
   })
-
-  it('returns null when value is an empty string', () => {
-    expect(parseDate('')).toBeNull()
+  it('should produce consistent results for the same email', () => {
+    const email = 'test@example.com'
+    expect(createHash(email)).toBe(createHash(email))
   })
-
-  it('returns a valid Date object for a YYYY-MM-DD string', () => {
-    const dateStr = '2025-10-29'
-    const result = parseDate(dateStr)
-    expect(result).toBeInstanceOf(Date)
-    expect(result?.toISOString().startsWith('2025-10-29')).toBe(true)
-  })
-
-  it('returns null for an invalid date string', () => {
-    const dateStr = 'not-a-date'
-    expect(parseDate(dateStr)).toBeNull()
-  })
-
-  it('returns null for a malformed date string (e.g. month 13)', () => {
-    expect(parseDate('2025-13-01')).toBeNull()
+  it('should return a 32-character hexadecimal string', () => {
+    const hash = createHash('test@example.com')
+    expect(hash).toMatch(/^[a-f0-9]{32}$/)
   })
 })

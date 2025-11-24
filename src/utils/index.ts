@@ -1,4 +1,4 @@
-import { randomBytes } from 'crypto'
+import crypto, { randomBytes } from 'crypto'
 
 export const validateEmail = async (email: string): Promise<boolean> => {
   const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -16,8 +16,4 @@ export const validateEmail = async (email: string): Promise<boolean> => {
 
 export const generateApiKey = (): string => randomBytes(32).toString('hex').toUpperCase()
 
-export const parseDate = (value: string | null): Date | null => {
-  if (!value) return null
-  const date = new Date(value)
-  return isNaN(date.getTime()) ? null : date
-}
+export const createHash = (email: string): string => crypto.createHash('md5').update(email.toLowerCase()).digest('hex')

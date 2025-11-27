@@ -1,0 +1,102 @@
+{
+  "openapi": "3.0.4",
+  "info": {
+    "title": "Cultus Ventures BTC Analysis API",
+    "description": "Documentation for Cultus Ventures BTC Analysis API",
+    "termsOfService": "https://swagger.io/terms/",
+    "contact": {
+      "email": "info@cultusventures.com"
+    },
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "analysis"
+    }
+  ],
+  "paths": {
+    "/api/analysis": {
+      "get": {
+        "tags": ["analysis"],
+        "parameters": [
+          {
+            "name": "from",
+            "in": "query",
+            "description": "Start date (inclusive) for filtering results by createdAt",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "example": "2024-01-01T00:00:00.000Z"
+            }
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "description": "End date (inclusive) for filtering results by createdAt",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "example": "2024-12-31T23:59:59.000Z"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation of returning a list of analysis objects",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Analysis"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "apiKey": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Analysis": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "jkhbmz3fb0220mcaft1tbcfgo"
+          },
+          "trend": {
+            "type": "string",
+            "enum": ["BULLISH", "BEARISH"],
+            "example": "BULLISH"
+          },
+          "btcPrice": {
+            "type": "integer",
+            "example": 111000,
+            "description": "BTC value in USD"
+          },
+          "createdAt": {
+            "type": "string",
+            "example": "2020-04-27T00:00:00.000Z"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "apiKey": {
+        "type": "apiKey",
+        "name": "CV-API-KEY",
+        "in": "header"
+      }
+    }
+  }
+}

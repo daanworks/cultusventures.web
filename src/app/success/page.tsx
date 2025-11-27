@@ -52,7 +52,7 @@ const SuccessPage = ({ searchParams }: { searchParams: { session_id?: string } }
       <p className="text-lg mb-2">
         We’ve sent an email to <strong>{email}</strong>.
       </p>
-      <p className="text-sm">Check your inbox for further instructions.</p>
+      <p className="text-sm">Check your inbox for further instructions</p>
     </div>
   )
 }

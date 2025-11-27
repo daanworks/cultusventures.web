@@ -11,7 +11,7 @@ const Form: FC<Props> = ({ className, onSubmit, children }) => {
   return (
     <form
       className={classNames(
-        'flex gap-2 xl:p-10 lg:p-8 md:p-6 sm:p-4 p-4 rounded-full bg-gradient bg-no-repeat bg-cover bg-top md:-mx-24 sm:-mx-8 -mx-0 shadow-lg',
+        'flex gap-3 xl:p-10 lg:p-8 md:p-6 sm:p-4 p-4 rounded-full bg-gradient bg-no-repeat bg-cover bg-top md:-mx-24 sm:-mx-8 -mx-0 shadow-lg',
         className,
       )}
       onSubmit={onSubmit}

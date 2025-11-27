@@ -6,9 +6,6 @@ const config: Config = {
     input: {
       placeholder: 'Enter your email',
     },
-    mailButton: {
-      tooltipContent: 'Access our latest Report',
-    },
     apiButton: {
       tooltipContent: 'Get API Access (soon...)',
     },

@@ -3,8 +3,8 @@ import './globals.css'
 import { Analytics } from '@vercel/analytics/next'
 
 export const metadata: Metadata = {
-  title: 'Cultus Ventures | Bitcoin Research & Investment',
-  description: 'Bitcoin Research & Investment',
+  title: 'Cultus Ventures | Investment Research Project',
+  description: 'Investment Research Project',
 }
 
 export default function RootLayout({

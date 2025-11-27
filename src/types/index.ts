@@ -4,9 +4,6 @@ export type Config = {
     input: {
       placeholder: string
     }
-    mailButton: {
-      tooltipContent: string
-    }
     apiButton: {
       tooltipContent: string
     }

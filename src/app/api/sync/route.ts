@@ -9,7 +9,7 @@ export const GET = async (req: NextRequest) => {
   if (auth !== `Bearer ${process.env.CRON_SECRET}`) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   try {
-    const subscribers: User[] = await UserService.getAll({ subscribed: true })
+    const subscribers: User[] = await UserService.getAll({})
     return NextResponse.json(subscribers, { status: 200 })
   } catch (error) {
     console.log('Sync error: ' + (error as Error).message)

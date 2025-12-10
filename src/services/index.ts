@@ -1,7 +1,8 @@
-import { Analysis, ApiKey, PrismaClient, User } from '@prisma/client'
+import { Analysis, ApiKey, Prisma, PrismaClient, User } from '@prisma/client'
 import { MailerooClient } from 'maileroo'
 import Stripe from 'stripe'
 import { DateFilters } from '@/types'
+import UserWhereInput = Prisma.UserWhereInput
 
 const prisma = new PrismaClient()
 const maileroo: MailerooClient = MailerooClient.getClient(process.env.MAILEROO_API_KEY)
@@ -46,7 +47,7 @@ export const UserService = {
       create: data,
     })
   },
-  getAll: async (where: { subscribed: boolean }): Promise<User[]> => {
+  getAll: async (where: UserWhereInput): Promise<User[]> => {
     return await prisma.user.findMany({ where })
   },
 }

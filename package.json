@@ -28,7 +28,7 @@
     "@vercel/analytics": "^1.5.0",
     "classnames": "^2.5.1",
     "maileroo": "^0.0.2",
-    "next": "14.2.15",
+    "next": "^16.0.7",
     "node-cache": "^5.1.2",
     "react": "^18",
     "react-dom": "^18",

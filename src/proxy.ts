@@ -3,7 +3,7 @@ import NodeCache from 'node-cache'
 
 const cache = new NodeCache({ stdTTL: 60 })
 
-export const middleware = async (req: NextRequest) => {
+export const proxy = async (req: NextRequest) => {
   const apiKey: string = req.headers.get('CV-API-KEY') || ''
   const adminCredentials = btoa(`${process.env.ADMIN_USER}:${process.env.ADMIN_PASSWORD}`)
   if (!apiKey) return NextResponse.json({ error: 'API key required' }, { status: 401 })

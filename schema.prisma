@@ -8,33 +8,8 @@ datasource db {
   directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
-model ApiKey {
-  id        String   @id @default(cuid())
-  apiKey    String
-  createdAt DateTime @default(now()) @map(name: "created_at")
-
-  userId String
-  user   User   @relation(fields: [userId], references: [id])
-
-  @@map(name: "apiKey")
-}
-
 model User {
-  id         String   @id @default(cuid())
-  email      String   @unique
-  subscribed Boolean  @default(false)
-  createdAt  DateTime @default(now()) @map(name: "created_at")
-  apiKeys    ApiKey[]
-}
-
-model Analysis {
-  id        String    @id @default(cuid())
-  trend     TrendType
-  btcPrice  Int
-  createdAt DateTime  @default(now()) @map(name: "created_at")
-}
-
-enum TrendType {
-  BULLISH
-  BEARISH
+  id        String   @id @default(cuid())
+  email     String   @unique
+  createdAt DateTime @default(now()) @map(name: "created_at")
 }

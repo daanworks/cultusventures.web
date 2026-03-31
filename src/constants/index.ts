@@ -1,2 +1,1 @@
-export const BEARISH = 'BEARISH'
-export const BULLISH = 'BULLISH'
+export const TEST = 'TEST'

@@ -8,8 +8,73 @@ datasource db {
   directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
+enum Currency {
+  HUF
+  USD
+  EUR
+}
+
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  createdAt DateTime @default(now()) @map(name: "created_at")
+  id           String        @id @default(cuid())
+  email        String        @unique
+  bankAccounts BankAccount[]
+  cash         Cash[]
+  stocks       Stock[]
+  cryptos      Crypto[]
+  others       Other[]
+  createdAt    DateTime      @default(now()) @map(name: "created_at")
+}
+
+model BankAccount {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  name     String?
+  bankName String?
+
+  balance  Float
+  currency Currency
+}
+
+model Cash {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  name String?
+
+  amount   Float
+  currency Currency
+}
+
+model Stock {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+  symbol String
+
+  priceOnBuy     Float
+  numberOfShares Int
+  currency       Currency
+}
+
+model Crypto {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+  symbol String
+
+  priceOnBuy Float
+  amount     Int
+  currency   Currency
+}
+
+model Other {
+  id       String   @id @default(cuid())
+  userId   String
+  user     User     @relation(fields: [userId], references: [id])
+  name     String
+  value    Float
+  currency Currency
 }

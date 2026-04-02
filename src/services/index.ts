@@ -1,4 +1,5 @@
 import { BankAccount, Cash, Crypto, Other, Prisma, PrismaClient, Stock, User } from '@prisma/client'
+import { PopulatedUser } from '@/types'
 
 const prisma = new PrismaClient()
 
@@ -6,8 +7,20 @@ export const UserService = {
   create: async (data: Prisma.UserCreateInput): Promise<User> => {
     return await prisma.user.create({ data })
   },
-  getById: async (id: string): Promise<User | null> => {
-    return await prisma.user.findUnique({ where: { id } })
+  getById: async (id: string): Promise<PopulatedUser | null> => {
+    return await prisma.user.findUnique({
+      omit: {
+        passwordHash: true,
+      },
+      where: { id },
+      include: {
+        bankAccounts: true,
+        cash: true,
+        stocks: true,
+        cryptos: true,
+        others: true,
+      },
+    })
   },
   getByEmail: async (email: string): Promise<User | null> => {
     return await prisma.user.findUnique({ where: { email } })

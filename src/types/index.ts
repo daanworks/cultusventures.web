@@ -5,6 +5,8 @@ export type SessionPayload = {
 
 export type Currency = 'HUF' | 'USD' | 'EUR'
 
+export type TransactionType = 'INCOME' | 'EXPENSE'
+
 export type BankAccount = {
   id: string
   name: string | null
@@ -43,6 +45,14 @@ export type Other = {
   currency: Currency
 }
 
+export type Transaction = {
+  id: string
+  name: string
+  type: TransactionType
+  value: number
+  currency: Currency
+}
+
 export type PopulatedUser = {
   id: string
   email: string
@@ -51,6 +61,7 @@ export type PopulatedUser = {
   stocks: Stock[]
   cryptos: Crypto[]
   others: Other[]
+  transactions: Transaction[]
 }
 
 export type SessionUser = {

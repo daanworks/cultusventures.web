@@ -14,6 +14,11 @@ enum Currency {
   EUR
 }
 
+enum TransactionType {
+  INCOME
+  EXPENSE
+}
+
 model User {
   id           String        @id @default(cuid())
   email        String        @unique
@@ -23,28 +28,25 @@ model User {
   stocks       Stock[]
   cryptos      Crypto[]
   others       Other[]
+  transactions Transaction[]
   createdAt    DateTime      @default(now()) @map(name: "created_at")
 }
 
 model BankAccount {
-  id     String @id @default(cuid())
-  userId String
-  user   User   @relation(fields: [userId], references: [id])
-
+  id       String   @id @default(cuid())
+  userId   String
+  user     User     @relation(fields: [userId], references: [id])
   name     String?
   bankName String?
-
   balance  Float
   currency Currency
 }
 
 model Cash {
-  id     String @id @default(cuid())
-  userId String
-  user   User   @relation(fields: [userId], references: [id])
-
-  name String?
-
+  id       String   @id @default(cuid())
+  userId   String
+  user     User     @relation(fields: [userId], references: [id])
+  name     String?
   amount   Float
   currency Currency
 }
@@ -67,7 +69,7 @@ model Crypto {
   symbol String
 
   priceOnBuy Float
-  amount     Int
+  amount     Float
   currency   Currency
 }
 
@@ -76,6 +78,16 @@ model Other {
   userId   String
   user     User     @relation(fields: [userId], references: [id])
   name     String
+  value    Float
+  currency Currency
+}
+
+model Transaction {
+  id       String          @id @default(cuid())
+  userId   String
+  user     User            @relation(fields: [userId], references: [id])
+  name     String
+  type     TransactionType
   value    Float
   currency Currency
 }

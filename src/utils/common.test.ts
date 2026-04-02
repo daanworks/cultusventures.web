@@ -1,4 +1,4 @@
-import { validateEmail } from '@/utils/index'
+import { validateEmail } from '@/utils/common'
 
 describe('validateEmail', () => {
   it('returns false for empty email', async () => {

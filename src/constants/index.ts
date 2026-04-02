@@ -1,1 +1,1 @@
-export const TEST = 'TEST'
+export const COOKIE_SESSION_NAME = 'cultus-ventures-session'

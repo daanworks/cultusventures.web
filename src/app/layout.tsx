@@ -1,10 +1,11 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import { Analytics } from '@vercel/analytics/next'
+import StoreProvider from '@/store/provider'
 
 export const metadata: Metadata = {
-  title: 'Cultus Ventures | Investment Research Project',
-  description: 'Investment Research Project',
+  title: 'Cultus Ventures | Smart Money Management',
+  description: 'Smart Money Management',
 }
 
 export default function RootLayout({
@@ -15,7 +16,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="relative overflow-x-hidden">
-        {children}
+        <StoreProvider>{children}</StoreProvider>
         <Analytics />
       </body>
     </html>

@@ -1,12 +1,20 @@
-/** @type {import('ts-jest').JestConfigWithTsJest} **/
-module.exports = {
-  preset: 'ts-jest',
+/* eslint-disable @typescript-eslint/no-require-imports */
+const nextJest = require('next/jest')
+
+const createJestConfig = nextJest({
+  dir: './',
+})
+
+const customJestConfig = {
   testEnvironment: 'node',
   testMatch: ['**/?(*.)+(test).ts'],
-  transform: {
-    '^.+\\.tsx?$': ['ts-jest', {}],
-  },
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
   },
+  transform: {
+    '^.+\\.(js|jsx|ts|tsx)$': ['babel-jest', { presets: ['next/babel'] }],
+  },
+  transformIgnorePatterns: ['<rootDir>/node_modules/(?!(jose)/)'],
 }
+
+module.exports = createJestConfig(customJestConfig)

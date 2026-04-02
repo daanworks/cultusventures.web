@@ -20,6 +20,7 @@ export const GET = async () => {
       stocks: user.stocks,
       cryptos: user.cryptos,
       others: user.others,
+      transactions: user.transactions,
     })
   } catch (error) {
     console.error('Get user data error:', (error as Error).message)

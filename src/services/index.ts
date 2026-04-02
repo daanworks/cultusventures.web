@@ -19,6 +19,7 @@ export const UserService = {
         stocks: true,
         cryptos: true,
         others: true,
+        transactions: true,
       },
     })
   },

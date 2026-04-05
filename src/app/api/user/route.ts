@@ -15,6 +15,7 @@ export const GET = async () => {
     return NextResponse.json({
       id: user.id,
       email: user.email,
+      currency: user.currency,
       bankAccounts: user.bankAccounts,
       cash: user.cash,
       stocks: user.stocks,

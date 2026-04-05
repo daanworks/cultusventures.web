@@ -56,6 +56,7 @@ export type Transaction = {
 export type PopulatedUser = {
   id: string
   email: string
+  currency: Currency
   bankAccounts: BankAccount[]
   cash: Cash[]
   stocks: Stock[]

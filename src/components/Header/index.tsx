@@ -23,7 +23,11 @@ const Header = () => {
       <Logo />
       {session.isChecked && session.isAuthenticated && (
         <div className="flex items-center gap-2">
-          {user && <div>Signed in: {user.email}</div>}
+          {user && (
+            <div>
+              Signed in: {user.email} Currency: {user.currency}
+            </div>
+          )}
           <button type="button" onClick={async () => await logout().unwrap()} disabled={isLogoutLoading}>
             Logout
           </button>

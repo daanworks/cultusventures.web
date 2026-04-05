@@ -38,16 +38,11 @@
     @apply bg-white;
     @apply font-serif;
     @apply subpixel-antialiased;
-    @apply overscroll-none;
     @apply text-justify;
   }
   body {
     font-size: 18px;
     min-height: 100vh;
-    /*background: white;*/
-    /*background-image: radial-gradient(whitesmoke 1px, transparent 0);*/
-    /*background-size: 10px 10px;*/
-    /*background-position: -8px -8px;*/
   }
   a {
     @apply text-blue underline;

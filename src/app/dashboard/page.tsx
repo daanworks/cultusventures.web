@@ -2,36 +2,175 @@
 
 import { useAppSelector } from '@/store/hooks'
 import { selectUser } from '@/store/ducks/user'
-import { useGetSessionQuery, useGetUserQuery, useLogoutMutation } from '@/store/api'
+import { useGetSessionQuery, useGetUserQuery } from '@/store/api'
 import { selectSession } from '@/store/ducks/session'
-import { useRouter } from 'next/navigation'
-import { useEffect } from 'react'
+import Container from '@/components/Container'
 
 const DashboardPage = () => {
-  const router = useRouter()
   useGetSessionQuery()
   const session = useAppSelector(selectSession)
   const userQuery = useGetUserQuery(undefined, { skip: !session.isAuthenticated })
   const user = useAppSelector(selectUser)
 
-  const [logout, { isLoading: isLogoutLoading, isSuccess: isLogoutSuccess }] = useLogoutMutation()
-
-  useEffect(() => {
-    if (isLogoutSuccess || (session.isChecked && !session.isAuthenticated)) router.push('/login')
-  }, [isLogoutSuccess, session, router])
-
   if (!session.isChecked || session.isLoading || (session.isAuthenticated && userQuery.isLoading))
     return <div>Loading...</div>
 
   return (
-    <main style={{ padding: 24 }}>
-      <button type="button" onClick={async () => await logout().unwrap()} disabled={isLogoutLoading}>
-        {isLogoutLoading ? 'Logging out...' : 'Logout'}
-      </button>
-      <section style={{ marginTop: 24 }}>
-        <pre>{JSON.stringify(user, null, 2)}</pre>
+    <Container>
+      <section>
+        <h2 className="mb-3 text-xl font-semibold">Bank Accounts</h2>
+        <div className="overflow-x-auto rounded-2xl border">
+          <table className="min-w-full border-collapse">
+            <thead className="bg-gray-100">
+              <tr>
+                <th className="p-3 text-left">Name</th>
+                <th className="p-3 text-left">Bank Name</th>
+                <th className="p-3 text-left">Balance</th>
+                <th className="p-3 text-left">Currency</th>
+              </tr>
+            </thead>
+            <tbody>
+              {user &&
+                user.bankAccounts.map((account) => (
+                  <tr key={account.id} className="border-t">
+                    <td className="p-3">{account.name}</td>
+                    <td className="p-3">{account.bankName}</td>
+                    <td className="p-3">{account.balance}</td>
+                    <td className="p-3">{account.currency}</td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </div>
       </section>
-    </main>
+      <section>
+        <h2 className="mb-3 text-xl font-semibold">Cash</h2>
+        <div className="overflow-x-auto rounded-2xl border">
+          <table className="min-w-full border-collapse">
+            <thead className="bg-gray-100">
+              <tr>
+                <th className="p-3 text-left">Name</th>
+                <th className="p-3 text-left">Amount</th>
+                <th className="p-3 text-left">Currency</th>
+              </tr>
+            </thead>
+            <tbody>
+              {user &&
+                user.cash.map((item) => (
+                  <tr key={item.id} className="border-t">
+                    <td className="p-3">{item.name}</td>
+                    <td className="p-3">{item.amount}</td>
+                    <td className="p-3">{item.currency}</td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <section>
+        <h2 className="mb-3 text-xl font-semibold">Stocks</h2>
+        <div className="overflow-x-auto rounded-2xl border">
+          <table className="min-w-full border-collapse">
+            <thead className="bg-gray-100">
+              <tr>
+                <th className="p-3 text-left">Symbol</th>
+                <th className="p-3 text-left">Price on Buy</th>
+                <th className="p-3 text-left">Number of Shares</th>
+                <th className="p-3 text-left">Currency</th>
+              </tr>
+            </thead>
+            <tbody>
+              {user &&
+                user.stocks.length &&
+                user.stocks.map((stock) => (
+                  <tr key={stock.id} className="border-t">
+                    <td className="p-3">{stock.symbol}</td>
+                    <td className="p-3">{stock.priceOnBuy}</td>
+                    <td className="p-3">{stock.numberOfShares}</td>
+                    <td className="p-3">{stock.currency}</td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <section>
+        <h2 className="mb-3 text-xl font-semibold">Cryptos</h2>
+        <div className="overflow-x-auto rounded-2xl border">
+          <table className="min-w-full border-collapse">
+            <thead className="bg-gray-100">
+              <tr>
+                <th className="p-3 text-left">Symbol</th>
+                <th className="p-3 text-left">Price on Buy</th>
+                <th className="p-3 text-left">Amount</th>
+                <th className="p-3 text-left">Currency</th>
+              </tr>
+            </thead>
+            <tbody>
+              {user &&
+                user.cryptos.map((crypto) => (
+                  <tr key={crypto.id} className="border-t">
+                    <td className="p-3">{crypto.symbol}</td>
+                    <td className="p-3">{crypto.priceOnBuy}</td>
+                    <td className="p-3">{crypto.amount}</td>
+                    <td className="p-3">{crypto.currency}</td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <section>
+        <h2 className="mb-3 text-xl font-semibold">Other Assets</h2>
+        <div className="overflow-x-auto rounded-2xl border">
+          <table className="min-w-full border-collapse">
+            <thead className="bg-gray-100">
+              <tr>
+                <th className="p-3 text-left">Name</th>
+                <th className="p-3 text-left">Value</th>
+                <th className="p-3 text-left">Currency</th>
+              </tr>
+            </thead>
+            <tbody>
+              {user &&
+                user.others.map((item) => (
+                  <tr key={item.id} className="border-t">
+                    <td className="p-3">{item.name}</td>
+                    <td className="p-3">{item.value}</td>
+                    <td className="p-3">{item.currency}</td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <section>
+        <h2 className="mb-3 text-xl font-semibold">Transactions</h2>
+        <div className="overflow-x-auto rounded-2xl border">
+          <table className="min-w-full border-collapse">
+            <thead className="bg-gray-100">
+              <tr>
+                <th className="p-3 text-left">Name</th>
+                <th className="p-3 text-left">Type</th>
+                <th className="p-3 text-left">Value</th>
+                <th className="p-3 text-left">Currency</th>
+              </tr>
+            </thead>
+            <tbody>
+              {user &&
+                user.transactions.map((transaction) => (
+                  <tr key={transaction.id} className="border-t">
+                    <td className="p-3">{transaction.name}</td>
+                    <td className="p-3">{transaction.type}</td>
+                    <td className="p-3">{transaction.value}</td>
+                    <td className="p-3">{transaction.currency}</td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </Container>
   )
 }
 

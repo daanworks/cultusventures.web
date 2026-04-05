@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 import { Analytics } from '@vercel/analytics/next'
 import StoreProvider from '@/store/provider'
+import Header from '@/components/Header'
 
 export const metadata: Metadata = {
   title: 'Cultus Ventures | Smart Money Management',
@@ -15,8 +16,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="relative overflow-x-hidden">
-        <StoreProvider>{children}</StoreProvider>
+      <body>
+        <StoreProvider>
+          <Header />
+          {children}
+        </StoreProvider>
         <Analytics />
       </body>
     </html>

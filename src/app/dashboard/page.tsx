@@ -2,17 +2,38 @@
 
 import { useAppSelector } from '@/store/hooks'
 import { selectUser } from '@/store/ducks/user'
-import { useGetSessionQuery, useGetUserQuery } from '@/store/api'
+import { useGetExchangeQuery, useGetSessionQuery, useGetUserQuery } from '@/store/api'
 import { selectSession } from '@/store/ducks/session'
 import Container from '@/components/Container'
+import { convertToBaseCurrency, getUserAssetCurrencies } from '@/utils/common'
+import { selectExchange } from '@/store/ducks/exchange'
+import { useEffect } from 'react'
 
 const DashboardPage = () => {
   useGetSessionQuery()
   const session = useAppSelector(selectSession)
   const userQuery = useGetUserQuery(undefined, { skip: !session.isAuthenticated })
   const user = useAppSelector(selectUser)
+  const exchangeQuery = useGetExchangeQuery(
+    {
+      base: user?.currency || 'HUF',
+      symbols: getUserAssetCurrencies(user) || [],
+    },
+    {
+      skip: !user,
+    },
+  )
+  const exchange = useAppSelector(selectExchange)
 
-  if (!session.isChecked || session.isLoading || (session.isAuthenticated && userQuery.isLoading))
+  useEffect(() => {
+    console.log('exchange state', exchange)
+  }, [exchange])
+
+  if (
+    !session.isChecked ||
+    session.isLoading ||
+    (session.isAuthenticated && (userQuery.isLoading || exchangeQuery.isLoading))
+  )
     return <div>Loading...</div>
 
   return (
@@ -27,6 +48,7 @@ const DashboardPage = () => {
                 <th className="p-3 text-left">Bank Name</th>
                 <th className="p-3 text-left">Balance</th>
                 <th className="p-3 text-left">Currency</th>
+                <th className="p-3 text-left">Total in {user?.currency}</th>
               </tr>
             </thead>
             <tbody>
@@ -37,6 +59,9 @@ const DashboardPage = () => {
                     <td className="p-3">{account.bankName}</td>
                     <td className="p-3">{account.balance}</td>
                     <td className="p-3">{account.currency}</td>
+                    <td className="p-3">
+                      {convertToBaseCurrency(account.balance, account.currency, user.currency, exchange.rates)}
+                    </td>
                   </tr>
                 ))}
             </tbody>
@@ -52,6 +77,7 @@ const DashboardPage = () => {
                 <th className="p-3 text-left">Name</th>
                 <th className="p-3 text-left">Amount</th>
                 <th className="p-3 text-left">Currency</th>
+                <th className="p-3 text-left">Total in {user?.currency}</th>
               </tr>
             </thead>
             <tbody>
@@ -61,6 +87,9 @@ const DashboardPage = () => {
                     <td className="p-3">{item.name}</td>
                     <td className="p-3">{item.amount}</td>
                     <td className="p-3">{item.currency}</td>
+                    <td className="p-3">
+                      {convertToBaseCurrency(item.amount, item.currency, user.currency, exchange.rates)}
+                    </td>
                   </tr>
                 ))}
             </tbody>
@@ -77,6 +106,8 @@ const DashboardPage = () => {
                 <th className="p-3 text-left">Price on Buy</th>
                 <th className="p-3 text-left">Number of Shares</th>
                 <th className="p-3 text-left">Currency</th>
+                <th className="p-3 text-left">Total</th>
+                <th className="p-3 text-left">Total in {user?.currency}</th>
               </tr>
             </thead>
             <tbody>
@@ -88,6 +119,15 @@ const DashboardPage = () => {
                     <td className="p-3">{stock.priceOnBuy}</td>
                     <td className="p-3">{stock.numberOfShares}</td>
                     <td className="p-3">{stock.currency}</td>
+                    <td className="p-3">{stock.numberOfShares * stock.priceOnBuy}</td>
+                    <td className="p-3">
+                      {convertToBaseCurrency(
+                        stock.numberOfShares * stock.priceOnBuy,
+                        stock.currency,
+                        user.currency,
+                        exchange.rates,
+                      )}
+                    </td>
                   </tr>
                 ))}
             </tbody>
@@ -104,6 +144,8 @@ const DashboardPage = () => {
                 <th className="p-3 text-left">Price on Buy</th>
                 <th className="p-3 text-left">Amount</th>
                 <th className="p-3 text-left">Currency</th>
+                <th className="p-3 text-left">Total</th>
+                <th className="p-3 text-left">Total in {user?.currency}</th>
               </tr>
             </thead>
             <tbody>
@@ -114,6 +156,15 @@ const DashboardPage = () => {
                     <td className="p-3">{crypto.priceOnBuy}</td>
                     <td className="p-3">{crypto.amount}</td>
                     <td className="p-3">{crypto.currency}</td>
+                    <td className="p-3">{crypto.amount * crypto.priceOnBuy}</td>
+                    <td className="p-3">
+                      {convertToBaseCurrency(
+                        crypto.amount * crypto.priceOnBuy,
+                        crypto.currency,
+                        user.currency,
+                        exchange.rates,
+                      )}
+                    </td>
                   </tr>
                 ))}
             </tbody>
@@ -129,6 +180,7 @@ const DashboardPage = () => {
                 <th className="p-3 text-left">Name</th>
                 <th className="p-3 text-left">Value</th>
                 <th className="p-3 text-left">Currency</th>
+                <th className="p-3 text-left">Total in {user?.currency}</th>
               </tr>
             </thead>
             <tbody>
@@ -138,6 +190,9 @@ const DashboardPage = () => {
                     <td className="p-3">{item.name}</td>
                     <td className="p-3">{item.value}</td>
                     <td className="p-3">{item.currency}</td>
+                    <td className="p-3">
+                      {convertToBaseCurrency(item.value, item.currency, user.currency, exchange.rates)}
+                    </td>
                   </tr>
                 ))}
             </tbody>
@@ -154,6 +209,7 @@ const DashboardPage = () => {
                 <th className="p-3 text-left">Type</th>
                 <th className="p-3 text-left">Value</th>
                 <th className="p-3 text-left">Currency</th>
+                <th className="p-3 text-left">Total in {user?.currency}</th>
               </tr>
             </thead>
             <tbody>
@@ -164,6 +220,9 @@ const DashboardPage = () => {
                     <td className="p-3">{transaction.type}</td>
                     <td className="p-3">{transaction.value}</td>
                     <td className="p-3">{transaction.currency}</td>
+                    <td className="p-3">
+                      {convertToBaseCurrency(transaction.value, transaction.currency, user.currency, exchange.rates)}
+                    </td>
                   </tr>
                 ))}
             </tbody>

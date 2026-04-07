@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { PopulatedUser, SessionUser } from '@/types'
+import { Currency, PopulatedUser, SessionUser } from '@/types'
 
 type LoginRequest = {
   email: string
@@ -13,6 +13,16 @@ type LoginResponse = {
 
 type SessionResponse = {
   user: SessionUser | null
+}
+
+type ExchangeRequest = {
+  base: Currency
+  symbols: Currency[]
+}
+
+type ExchangeResponse = {
+  baseCurrency: Currency
+  rates: Partial<Record<Currency, number>>
 }
 
 const api = createApi({
@@ -55,6 +65,12 @@ const api = createApi({
       }),
       providesTags: ['User'],
     }),
+    getExchange: builder.query<ExchangeResponse, ExchangeRequest>({
+      query: ({ base, symbols }) => ({
+        url: `/exchange?base=${base}&symbols=${symbols.join(',')}`,
+        method: 'GET',
+      }),
+    }),
   }),
 })
 
@@ -65,6 +81,8 @@ export const {
   useLazyGetSessionQuery,
   useGetUserQuery,
   useLazyGetUserQuery,
+  useGetExchangeQuery,
+  useLazyGetExchangeQuery,
 } = api
 
 export default api

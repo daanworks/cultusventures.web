@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import { ibmSans, ibmSerif, ibmMono } from './fonts'
 import { Analytics } from '@vercel/analytics/next'
 import StoreProvider from '@/store/provider'
 import Header from '@/components/Header'
@@ -15,7 +16,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${ibmSans.variable} ${ibmSerif.variable} ${ibmMono.variable}`}>
       <body>
         <StoreProvider>
           <Header />

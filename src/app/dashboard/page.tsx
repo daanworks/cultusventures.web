@@ -38,7 +38,7 @@ const DashboardPage = () => {
 
   return (
     <Container>
-      <section>
+      <section className="mb-6">
         <h2 className="mb-3 text-xl font-semibold">Bank Accounts</h2>
         <div className="overflow-x-auto rounded-2xl border">
           <table className="min-w-full border-collapse">
@@ -68,7 +68,7 @@ const DashboardPage = () => {
           </table>
         </div>
       </section>
-      <section>
+      <section className="mb-6">
         <h2 className="mb-3 text-xl font-semibold">Cash</h2>
         <div className="overflow-x-auto rounded-2xl border">
           <table className="min-w-full border-collapse">
@@ -96,7 +96,7 @@ const DashboardPage = () => {
           </table>
         </div>
       </section>
-      <section>
+      <section className="mb-6">
         <h2 className="mb-3 text-xl font-semibold">Stocks</h2>
         <div className="overflow-x-auto rounded-2xl border">
           <table className="min-w-full border-collapse">
@@ -134,7 +134,7 @@ const DashboardPage = () => {
           </table>
         </div>
       </section>
-      <section>
+      <section className="mb-6">
         <h2 className="mb-3 text-xl font-semibold">Cryptos</h2>
         <div className="overflow-x-auto rounded-2xl border">
           <table className="min-w-full border-collapse">
@@ -171,7 +171,7 @@ const DashboardPage = () => {
           </table>
         </div>
       </section>
-      <section>
+      <section className="mb-6">
         <h2 className="mb-3 text-xl font-semibold">Other Assets</h2>
         <div className="overflow-x-auto rounded-2xl border">
           <table className="min-w-full border-collapse">
@@ -199,7 +199,7 @@ const DashboardPage = () => {
           </table>
         </div>
       </section>
-      <section>
+      <section className="mb-6">
         <h2 className="mb-3 text-xl font-semibold">Transactions</h2>
         <div className="overflow-x-auto rounded-2xl border">
           <table className="min-w-full border-collapse">

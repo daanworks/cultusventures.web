@@ -6,6 +6,7 @@ import { useEffect } from 'react'
 import { selectSession } from '@/store/ducks/session'
 import { useRouter } from 'next/navigation'
 import { useAppSelector } from '@/store/hooks'
+import Button from '@/components/atoms/Button'
 
 const Header = () => {
   const router = useRouter()
@@ -16,18 +17,15 @@ const Header = () => {
     if (isLogoutSuccess || (session.isChecked && !session.isAuthenticated)) router.push('/login')
   }, [isLogoutSuccess, session, router])
 
+  if (!session.isAuthenticated) return null
+
   return (
     <nav className="px-6 py-2 sticky top-0 left-0 flex items-center justify-between bg-white drop-shadow">
       <Logo />
       {session.isChecked && session.isAuthenticated && (
-        <button
-          type="button"
-          className="text-gray-500 border border-gray-500 px-4 py-2 rounded-lg text-sm"
-          onClick={async () => await logout().unwrap()}
-          disabled={isLogoutLoading}
-        >
+        <Button variant="secondary" onClick={async () => await logout().unwrap()} disabled={isLogoutLoading}>
           Logout
-        </button>
+        </Button>
       )}
     </nav>
   )

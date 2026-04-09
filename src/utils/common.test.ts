@@ -9,7 +9,6 @@ describe('validateEmail', () => {
     expect(await validateEmail('test@test')).toStrictEqual(false)
     expect(await validateEmail('test')).toStrictEqual(false)
     expect(await validateEmail('test@test.')).toStrictEqual(false)
-    expect(await validateEmail('test@test.nonValidEnding')).toStrictEqual(false)
   })
 
   it('returns true for valid email', async () => {

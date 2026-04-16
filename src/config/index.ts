@@ -2,7 +2,7 @@ const config = {
   publicPaths: ['/login', '/api/login', '/api/logout'],
   uiPaths: {
     login: '/login',
-    dashboard: '/dashboard',
+    home: '/',
   },
   apiPath: '/api',
   staticPaths: {

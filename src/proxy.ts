@@ -17,7 +17,7 @@ export const proxy = async (req: NextRequest) => {
   try {
     await verifySession(token)
     if (pathname.startsWith(appConfig.uiPaths.login))
-      return NextResponse.redirect(new URL(appConfig.uiPaths.dashboard, req.url))
+      return NextResponse.redirect(new URL(appConfig.uiPaths.home, req.url))
     return NextResponse.next()
   } catch {
     return NextResponse.redirect(new URL(appConfig.uiPaths.login, req.url))

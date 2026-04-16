@@ -3,17 +3,15 @@
 import { ChangeEvent, useCallback, useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useLoginMutation } from '@/store/api'
-import { useAppSelector } from '@/store/hooks'
-import { selectSession } from '@/store/ducks/session'
 import Button from '@/components/atoms/Button'
 import Input from '@/components/atoms/Input'
 import Logo from '@/components/Logo'
 import { validateEmail } from '@/utils/common'
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
+import Loading from '@/components/Loading'
 
 const LoginPage = () => {
   const router = useRouter()
-  const session = useAppSelector(selectSession)
   const [login, { isLoading }] = useLoginMutation()
 
   const [email, setEmail] = useState<string>('')
@@ -21,6 +19,7 @@ const LoginPage = () => {
   const [isEmailInValid, setIsEmailInValid] = useState<boolean>(false)
   const [isPasswordInvalid, setIsPasswordInvalid] = useState<boolean>(false)
   const [errorMessage, setErrorMessage] = useState<string>('')
+  const [isRedirecting, setIsRedirecting] = useState<boolean>(false)
 
   const handleSubmit = useCallback(async (): Promise<void> => {
     if (!email && !password) {
@@ -41,6 +40,8 @@ const LoginPage = () => {
     }
     try {
       await login({ email, password }).unwrap()
+      setIsRedirecting(true)
+      router.replace('/')
     } catch (error) {
       setErrorMessage(((error as FetchBaseQueryError).data as Record<string, string>).error)
       setIsPasswordInvalid(true)
@@ -49,16 +50,12 @@ const LoginPage = () => {
   }, [email, login, password])
 
   useEffect(() => {
-    if (session.isAuthenticated) {
-      router.push('/dashboard')
-    }
-  }, [session, router])
-
-  useEffect(() => {
     setIsPasswordInvalid(false)
     setIsEmailInValid(false)
     setErrorMessage('')
   }, [password, email])
+
+  if (isLoading || isRedirecting) return <Loading />
 
   return (
     <div className="flex justify-center pt-20">
